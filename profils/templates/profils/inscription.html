@@ -1,10 +1,30 @@
-<!DOCTYPE html>
-<html lang="fr">
+<h1>Inscription</h1>
 
 
-<li><a href="/inscription_etudiant/">Inscription en tant qu'étudiant</a></li>
-            
-            
-<li><a href="/inscription_particulier/">Inscription en tant que particulier</a></li>
+{% if wrong_email %}
 
-</html>
+    <p>Cet adresse email a déjà été utilisée.</p>
+
+{% endif %}
+
+{% if wrong_username %}
+
+    <p>Ce pseudo a déjà été utilisé.</p>
+
+{% endif %}
+
+   
+
+<p>
+
+    <form method="post" enctype="multipart/form-data" action=".">
+
+       {% csrf_token %}
+
+       {{ form.as_p }}
+
+       <input type="submit"/>
+
+    </form>
+
+</p>
