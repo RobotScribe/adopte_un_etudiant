@@ -40,7 +40,6 @@ class Annonce (models.Model) :
 	prix = models.DecimalField(max_digits=5,decimal_places=2)
 	annonceur=models.ForeignKey("Profil")
 	lieux = models.CharField(max_length=50)
-	trajet = models.BooleanField()
 	distance_max = models.IntegerField()
 	numero = models.IntegerField()
 

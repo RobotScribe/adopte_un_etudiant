@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from profils.forms import InscriptionForm, ConnexionForm
+from profils.forms import InscriptionForm, ConnexionForm, AnnonceForm
 from profils.models import Profil, User, Annonce
 from django.contrib.auth import authenticate, login, logout
 from django.core.urlresolvers import reverse
@@ -90,15 +90,40 @@ def deconnexion(request):
 
 def list_annonces(request):
     annonces = Annonce.objects.all()
-    return render(request,'list_annonce.htlm',locals())
+    return render(request,'profils/list_annonce.html',locals())
 
 def annonce(resquest,numero) :
     annonce = get_object_or_404(Annonce, numero=numero)
-    return render(request,'annonce.html',locals())
+    return render(request,'profils/annonce.html',locals())
     
 def proposer_annonce(request):
-    return none
+    if request.user.is_authenticated:
+        print('authentification réussie')
+
+        if request.method == "POST":
+            form = AnnonceForm(request.POST)
+            print("annonce reçue")
+            if form.is_valid():
+                annonce = Annonce()
+                print("formulaire valide")
+                annonce.titre=form.cleaned_data["titre"]
+                annonce.boulot=form.cleaned_data["boulot"]
+                annonce.annonce=form.cleaned_data["annonce"]
+                annonce.prix=form.annonce.cleaned_data["prix"]
+                annonce.lieux = form.annonce.cleaned_data["lieux"]
+                annonce.distance_max=form.annonce.cleaned_data["distance_max"]
+                annonce.save()
+                return render(request, 'profils/annonce_reussie.html', locals())
+                      
+        else:
+            
+            form = AnnonceForm()
+            print('creation du formulaire')
+
+        return render(request, 'profils/proposer_annonce.html', locals())
     
+    else :
+        return redirect(connexion)
     
     
     
