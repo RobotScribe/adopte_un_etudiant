@@ -12,9 +12,4 @@ class InscriptionForm(forms.Form):
     is_student = forms.BooleanField(required=False,label = "cochez si vous êtes étudiant")
     école = forms.CharField(required=False,label = "rentrez votre école si vous êtes étudiant")
     
-    
-class ConnexionForm(forms.Form):
-    username = forms.CharField(label="Pseudo")
-    password = forms.CharField(label="Mot de passe", widget=forms.PasswordInput)
-    
 

@@ -1,9 +1,7 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from django.http import HttpResponse
-from profils.forms import InscriptionForm, ConnexionForm
-from profils.models import Profil, User
-from django.contrib.auth import authenticate, login, logout
-from django.core.urlresolvers import reverse
+from profils.forms import InscriptionForm
+from profils.models import Profil, User, Annonce
 
 def home(request):
     return render(request, 'base.html', locals())
@@ -60,30 +58,14 @@ def inscription(request):
     print("envoi formulaire blanc")
     return render(request, 'profils/inscription.html', locals())
     
-    
-def connexion(request):
-    error = False
-    
-    if request.method == "POST":
-        form = ConnexionForm(request.POST)
-        if form.is_valid():
-            username = form.cleaned_data["username"]
-            password = form.cleaned_data["password"]
-            user = authenticate(username=username, password=password)  # Nous vérifions si les données sont correctes
-            if user:  # Si l'objet renvoyé n'est pas None
-                login(request, user)  # nous connectons l'utilisateur
-            else: # sinon une erreur sera affichée
-                error = True
-    else:
-        form = ConnexionForm()
 
-    return render(request, 'profils/connexion.html', locals())
-    
+    def list_annonce(request):
+        annonces = Annonce.objects.all()
+        return render(request,'list_annonce.htlm',locals())
 
-def deconnexion(request):
-    logout(request)
-    return redirect(reverse(connexion))
-    
+    def annonce(resquest,numero) :
+        return render(request,'annonce.html',locals())
+
 
     
     
