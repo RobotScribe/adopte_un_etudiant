@@ -10,7 +10,7 @@ def home(request):
 
 
 def inscription(request):
-    sauvegarde = False
+    print("ok")
     wrong_email = False
     wrong_username = False
     
@@ -21,6 +21,7 @@ def inscription(request):
             print("formulaire valide")
             emailForm = form.cleaned_data["email"]
             pseudoForm = form.cleaned_data["pseudo"]
+            print(form.cleaned_data["password"])
             if (len(User.objects.filter(email = emailForm)) == 0) and (len(User.objects.filter(username = pseudoForm))) == 0:
                 print("test ok")
                 profil = Profil()
@@ -29,7 +30,8 @@ def inscription(request):
                 user.first_name = form.cleaned_data["prenom"]
                 user.last_name = form.cleaned_data["nom"] 
                 user.email = form.cleaned_data["email"]            
-                user.password = form.cleaned_data["password"]
+                password = form.cleaned_data["password"]
+                user.set_password(password)
                 user.is_staff = False
                 user.is_active = True
                 user.is_superuser = False
@@ -44,8 +46,8 @@ def inscription(request):
                     profil.ecole = form.cleaned_data["école"]
                 profil.save()
                 
-                print("inscription réussie")
-                return render(request, 'profils/inscription_reussie.html', locals())
+
+                return redirect(reverse(connexion), False)
                 
             else:
                 if len(User.objects.filter(email = emailForm)) != 0:
@@ -61,24 +63,26 @@ def inscription(request):
     return render(request, 'profils/inscription.html', locals())
     
     
-def connexion(request):
-    error = False
+def connexion(request, Bool = True):
+    if Bool:
+        error = False
     
-    if request.method == "POST":
-        form = ConnexionForm(request.POST)
-        if form.is_valid():
-            username = form.cleaned_data["username"]
-            password = form.cleaned_data["password"]
-            user = authenticate(username=username, password=password)  # Nous vérifions si les données sont correctes
-            print(user)
-            if user:  # Si l'objet renvoyé n'est pas None
-                login(request, user)  # nous connectons l'utilisateur
-            else: # sinon une erreur sera affichée
-                error = True
-    else:
-        form = ConnexionForm()
-
+        if request.method == "POST":
+            form = ConnexionForm(request.POST)
+            if form.is_valid():
+                username = form.cleaned_data["username"]
+                password = form.cleaned_data["password"]
+                print(password, )
+                user = authenticate(username=username, password=password)  # Nous vérifions si les données sont correctes
+                print(user)
+                if user:  # Si l'objet renvoyé n'est pas None
+                    login(request, user)  # nous connectons l'utilisateur
+                else: # sinon une erreur sera affichée
+                    error = True
+        else:
+            form = ConnexionForm()
     return render(request, 'profils/connexion.html', locals())
+    
     
 
 def deconnexion(request):
