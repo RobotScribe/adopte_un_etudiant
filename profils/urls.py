@@ -7,5 +7,6 @@ urlpatterns = [
     url(r'^connexion/$', views.connexion, name = 'connexion'),
     url(r'^deconnexion/$', views.deconnexion, name = 'deconnexion'),
     url(r'^annonces/$',views.list_annonces),
-    url(r'^annonce/(?P<numero>\d+$)',views.annonce)
+    url(r'^annonce/(?P<numero>\d+$)',views.annonce),
+    url(r'^proposer_annonce/$',views.proposer_annonce),
 ]

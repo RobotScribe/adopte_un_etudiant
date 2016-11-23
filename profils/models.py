@@ -27,7 +27,7 @@ class Profil(models.Model):
     description = models.TextField(null=True)
     
     def __str__(self):
-        return self.user.email
+        return self.user.username
         
 
         
@@ -37,9 +37,9 @@ class Annonce (models.Model) :
 	boulot = models.CharField(max_length=50)
 	annonce = models.TextField(null=False)
 	date = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name = "Date de dépôt")
-	prix = models.DecimalField(max_digits=5,decimal_place=2)
-	annonceur=models.ForeignKey("Profil",user)
-	lieux = models.CharField(max_length=)
+	prix = models.DecimalField(max_digits=5,decimal_places=2)
+	annonceur=models.ForeignKey("Profil")
+	lieux = models.CharField(max_length=50)
 	trajet = models.BooleanField()
 	distance_max = models.IntegerField()
 	numero = models.IntegerField()

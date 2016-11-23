@@ -70,6 +70,7 @@ def connexion(request):
             username = form.cleaned_data["username"]
             password = form.cleaned_data["password"]
             user = authenticate(username=username, password=password)  # Nous vérifions si les données sont correctes
+            print(user)
             if user:  # Si l'objet renvoyé n'est pas None
                 login(request, user)  # nous connectons l'utilisateur
             else: # sinon une erreur sera affichée
@@ -82,21 +83,22 @@ def connexion(request):
 
 def deconnexion(request):
     logout(request)
-    return redirect(reverse(connexion))
+    return redirect(reverse(home))
     
 
     
 
-    def list_annonce(request):
-        annonces = Annonce.objects.all()
-        return render(request,'list_annonce.htlm',locals())
+def list_annonces(request):
+    annonces = Annonce.objects.all()
+    return render(request,'list_annonce.htlm',locals())
 
-    def annonce(resquest,numero) :
-        return render(request,'annonce.html',locals())
+def annonce(resquest,numero) :
+    return render(request,'annonce.html',locals())
 
 
     
-    
+def proposer_annonce(request):
+    return none
     
     
     
