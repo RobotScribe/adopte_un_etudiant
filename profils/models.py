@@ -30,3 +30,20 @@ class Profil(models.Model):
         return self.user.email
         
 
+        
+class Annonce (models.Model) :
+	""" Classe qui va gérer tout ce qui concerne les articles"""
+	titre = models.CharField(max_length=200)
+	boulot = models.CharField(max_length=50)
+	annonce = models.TextField(null=False)
+	date = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name = "Date de dépôt")
+	prix = models.DecimalField(max_digits=5,decimal_place=2)
+	annonceur=models.ForeignKey("Profil",user)
+	lieux = models.CharField(max_length=)
+	trajet = models.BooleanField()
+	distance_max = models.IntegerField()
+	numero = models.IntegerField()
+
+	def __str__(self) :
+		return self.titre 
+

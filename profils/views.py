@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from profils.forms import InscriptionForm, ConnexionForm
-from profils.models import Profil, User
+from profils.models import Profil, User, Annonce
 from django.contrib.auth import authenticate, login, logout
 from django.core.urlresolvers import reverse
 
@@ -84,6 +84,16 @@ def deconnexion(request):
     logout(request)
     return redirect(reverse(connexion))
     
+
+    
+
+    def list_annonce(request):
+        annonces = Annonce.objects.all()
+        return render(request,'list_annonce.htlm',locals())
+
+    def annonce(resquest,numero) :
+        return render(request,'annonce.html',locals())
+
 
     
     
