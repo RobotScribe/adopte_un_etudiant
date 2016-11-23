@@ -93,9 +93,8 @@ def list_annonces(request):
     return render(request,'list_annonce.htlm',locals())
 
 def annonce(resquest,numero) :
+    annonce = Annonce.objects.filter(numero="numero")
     return render(request,'annonce.html',locals())
-
-
     
 def proposer_annonce(request):
     pass
