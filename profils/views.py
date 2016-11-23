@@ -35,6 +35,7 @@ def inscription(request):
                 profil.user = user
                 profil.age = form.cleaned_data["age"]           
                 profil.photo = form.cleaned_data["photo"]
+                print(form.cleaned_data["is_student"])
                 profil.is_student = form.cleaned_data["is_student"]
                 profil.description = form.cleaned_data["description"]
                 if profil.is_student:

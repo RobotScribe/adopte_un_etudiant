@@ -22,7 +22,7 @@ class Profil(models.Model):
     user = models.OneToOneField(User)
     age = models.IntegerField()
     photo = models.ImageField(upload_to="photos/", null=True)
-    is_student = models.BooleanField
+    is_student = models.BooleanField()
     ecole = models.CharField(null=True, max_length=100)
     description = models.TextField(null=True)
     
