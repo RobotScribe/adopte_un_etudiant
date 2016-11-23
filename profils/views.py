@@ -98,7 +98,7 @@ def annonce(resquest,numero) :
 
     
 def proposer_annonce(request):
-    return none
+    pass
     
     
     
