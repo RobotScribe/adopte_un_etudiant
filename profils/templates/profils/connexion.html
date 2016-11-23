@@ -13,6 +13,18 @@
 Vous êtes connecté, {{ user.username }} !
 
 <li><a href="/proposer_annonce/">Proposez une annonce</a></li>
+
+    {% if Bool %}
+
+    Vous êtes connecté, {{ user.username }} !
+    
+    {% else %}
+    
+    Vous êtes inscris, {{ user.username }} !
+    
+    {% endif %}
+    
+<li><a href="/proposer_annnonce/">Proposez une annonce</a></li>
 <li><a href="/annonces/">Voir les annonces</a></li>
 <li><a href="/deconnexion/">Déconnection</a></li>
 
