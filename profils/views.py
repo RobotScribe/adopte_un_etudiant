@@ -93,7 +93,7 @@ def list_annonces(request):
     return render(request,'list_annonce.htlm',locals())
 
 def annonce(resquest,numero) :
-    annonce = Annonce.objects.filter(numero="numero")
+    annonce = get_object_or_404(Annonce, numero=numero)
     return render(request,'annonce.html',locals())
     
 def proposer_annonce(request):
