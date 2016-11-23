@@ -87,11 +87,11 @@ def deconnexion(request):
 
     
 
-    def list_annonce(request):
+def list_annonces(request):
         annonces = Annonce.objects.all()
         return render(request,'list_annonce.htlm',locals())
 
-    def annonce(resquest,numero) :
+def annonce(resquest,numero) :
         return render(request,'annonce.html',locals())
 
 
