@@ -6,6 +6,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.core.urlresolvers import reverse
 
 def home(request):
+    if request.user.is_authenticated:
+        return render(request, 'home.html', locals())
     return render(request, 'base.html', locals())
 
 
@@ -72,8 +74,10 @@ def connexion(request):
             print(user)
             if user:  # Si l'objet renvoyé n'est pas None
                 login(request, user)  # nous connectons l'utilisateur
+                return redirect(home)
             else: # sinon une erreur sera affichée
                 error = True
+                
     else:
         form = ConnexionForm()
     return render(request, 'profils/connexion.html', locals())
@@ -125,8 +129,9 @@ def proposer_annonce(request):
                 annonce.prix=form.cleaned_data["prix"]
                 annonce.lieux = form.cleaned_data["lieux"]
                 annonce.distance_max=form.cleaned_data["distance_max"]
+                annonce.etat = "a faire"
                 print(request.user)
-                annonce.annonceur = Profil.objects.get(user = request.user)
+                annonce.annonceur = user.username
                 
                 list_annonces = Annonce.objects.all()# a changer #
                 list_num = []
@@ -152,7 +157,11 @@ def proposer_annonce(request):
         
         
 def postuler_annonce(request, numero):
-    pass
+    if request.user.is_authenticated:
+        if request.method == "POST":
+            if form.is_valid():
+                pass
+                
     
     
 def profil_client (request,client):

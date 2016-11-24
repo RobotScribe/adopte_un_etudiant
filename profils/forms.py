@@ -28,5 +28,5 @@ class AnnonceForm(forms.Form) :
     
     
 class PostulerAnnonceForm(forms.Form):
-    pass
+    Commentaires = forms.CharField(label = 'expliquez pourquoi le personne qui a postée cette annonce devrait vous prendre (facultatif)', required = False )
     

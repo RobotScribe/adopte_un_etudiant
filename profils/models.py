@@ -46,7 +46,6 @@ class Annonce (models.Model) :
     #etat ne peux prendre que 3 valeurs : "a faire", "fait", "en cours"
     etat = models.CharField(max_length=10)
 
-
 	def __str__(self) :
 		return self.titre 
 
