@@ -20,7 +20,7 @@ class ConnexionForm(forms.Form):
 
 class AnnonceForm(forms.Form) :
     titre = forms.CharField(max_length=200)
-    boulot = forms.ModelChoiceField(queryset=['Ménage','Déménagement','Plomberie','Jardinage','Cours','Service d\'aide à la personne'], empty_label=None)
+    #boulot = forms.ModelChoiceField(queryset=['Ménage','Déménagement','Plomberie','Jardinage','Cours','Service d\'aide à la personne'], empty_label=None)
     annonce = forms.CharField(label="Décrivez votre petite annonce")
     prix = forms.DecimalField(max_digits=5,decimal_places=2)
     lieux = forms.CharField(max_length=50)
