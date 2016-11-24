@@ -1,10 +1,16 @@
 <!DOCTYPE html>
 <html lang="fr">
 <title>
-<h1> Voici l'annonce <span class="small" > n°{{annonce.numero}} </span> proposée par {{annonce.annonceur}} le {{annonce.date|date:"DATE_FORMAT"}} </h1>
+Annonce n°{{annonce.numero}}
 </title>
 
 <body>
+<p>
+<a href = "{% url 'voir_client' annonceuss %}"> Voir le profil </a>
+<h1> Voici l'annonce <span class="small" > n°{{annonce.numero}} </span> proposée par <a href="{% url 'voir_client' annonceur %}">  {{annonce.annonceur}} </a> le {{annonce.date|date:"DATE_FORMAT"}} </h1>
+</p>
+</p>
+<p>
 
 <p> A {{ annonce.lieux}} </p>
 

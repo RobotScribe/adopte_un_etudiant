@@ -91,9 +91,21 @@ def list_annonces(request):
     return render(request,'profils/list_annonces.html',locals())
 
 def annonce(request,numero) :
-    annonce = Annonce.objects.get(numero=numero)
-    Bool = annonce.distance_max != 0
-    return render(request,'profils/annonce.html',locals())
+    print("annonce")
+    list_annonces = Annonce.objects.all()# a changer #
+    list_num = []
+    for annonce_deja_creee in list_annonces:
+        list_num.append(annonce_deja_creee.numero)
+    
+    if int(numero) not in list_num:
+        print('1')
+    #if Annonce.objects.exclude(numero=numero)== Annonce.objects.all() :
+        return render(request, 'profils/annonce_non_existante.html',locals())
+    else :    
+        print('2')
+        annonce = Annonce.objects.get(numero=numero)
+        Bool = annonce.distance_max != 0
+        return render(request,'profils/annonce.html',locals())
     
 def proposer_annonce(request):
     if request.user.is_authenticated:
@@ -143,6 +155,7 @@ def postuler_annonce(request, numero):
     pass
     
     
-    
+def profil_client (request,client):
+    pass    
     
     
