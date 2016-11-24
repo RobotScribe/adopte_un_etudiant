@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block title %} {{ request.user.username }} {% endblock %}
+{% block header %} <h1> Bonjour, {{ request.user.username }} </h1>  {% endblock %}
+{% block content %} 
+<p><a href="/voir_annonce_perso/">Voir vos annonces</a></p>
+<a href="/deconnexion/">Déconnexion</a>  
+{% endblock %}

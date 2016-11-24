@@ -12,14 +12,6 @@
 <img src="{% static 'img/logo.png' %}" alt="Mon image" ></code> 
 
 
-{% if request.user.is_authenticated %}
-
-<h1> Bonjour, {{ request.user.username }} </h1>  
-<a href="/deconnexion/">Déconnexion</a> 
-
-
-{% endif %}
-
 <header>{% block header %}Accueil{% endblock %}</header>
 
     <nav>
@@ -31,8 +23,6 @@
             <li><a href="/">Accueil</a></li>
 
             <li><a href="/inscription/">Inscription</a></li>
-
-            <li><a href="/connexion/">Connexion</a></li>
             
             <li><a href="/annonces/">Voir les annonces</a></li>
             
@@ -46,7 +36,9 @@
 
    <section id="content">
 
-       {% block content %}{% endblock %}
+       {% block content %}
+            <li><a href="/connexion/">Connexion</a></li>
+            {% endblock %}
 
    </section>
 
