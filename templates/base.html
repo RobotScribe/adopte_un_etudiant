@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
    <link rel="stylesheet" href="/media/css/style.css" />
-   <title>{% block title %}Adopte un étudiant{% endblock %}</title>
+   <title>{% block title %}Accueil{% endblock %}</title>
 
 </head>
 
@@ -10,6 +10,15 @@
 
 {% load static %}
 <img src="{% static 'img/logo.png' %}" alt="Mon image" ></code> 
+
+
+{% if request.user.is_authenticated %}
+
+<h1> Bonjour, {{ request.user.username }} </h1>  
+<a href="/deconnexion/">Déconnexion</a> 
+
+
+{% endif %}
 
 <header>{% block header %}Accueil{% endblock %}</header>
 

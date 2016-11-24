@@ -8,15 +8,18 @@
 
 <p> A {{ annonce.lieux}} </p>
 
-<p> Payé {{annonce.prix}} </p>
+<p> Payé {{annonce.prix}} €</p>
 
-{{% if annonce.distance_max==0 %}}
+{% if Bool %}
 	
 	<p> Possibilité de trajet jusuqu'à {{annonce.distance_max}} </p>
 
-{{% endif %}}
+{% endif %}
 
 <p>	Description : {{annonce.annonce}} </p>
 
+<a href="{% url "postuler_annonce" numero%}">Postulez pour cette annonce</a>
+
 </body>
+
 

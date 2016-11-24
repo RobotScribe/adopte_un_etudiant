@@ -88,10 +88,11 @@ def deconnexion(request):
 
 def list_annonces(request):
     annonces = Annonce.objects.all()
-    return render(request,'profils/list_annonce.html',locals())
+    return render(request,'profils/list_annonces.html',locals())
 
-def annonce(resquest,numero) :
-    annonce = get_object_or_404(Annonce, numero=numero)
+def annonce(request,numero) :
+    annonce = Annonce.objects.get(numero=numero)
+    Bool = annonce.distance_max != 0
     return render(request,'profils/annonce.html',locals())
     
 def proposer_annonce(request):
@@ -105,11 +106,25 @@ def proposer_annonce(request):
                 annonce = Annonce()
                 print("formulaire valide")
                 annonce.titre=form.cleaned_data["titre"]
-                annonce.boulot=form.cleaned_data["boulot"]
+                print(annonce.titre)
+                #annonce.boulot=form.cleaned_data["boulot"]
                 annonce.annonce=form.cleaned_data["annonce"]
-                annonce.prix=form.annonce.cleaned_data["prix"]
-                annonce.lieux = form.annonce.cleaned_data["lieux"]
-                annonce.distance_max=form.annonce.cleaned_data["distance_max"]
+                print(annonce.annonce)
+                annonce.prix=form.cleaned_data["prix"]
+                annonce.lieux = form.cleaned_data["lieux"]
+                annonce.distance_max=form.cleaned_data["distance_max"]
+                print(request.user)
+                annonce.annonceur = Profil.objects.get(user = request.user)
+                
+                list_annonces = Annonce.objects.all()# a changer #
+                list_num = []
+                for annonce_deja_creee in list_annonces:
+                    list_num.append(annonce_deja_creee.numero)
+                if len(list_num) == 0:
+                    annonce.numero = 1
+                else:
+                    annonce.numero = max(list_num) + 1
+                
                 annonce.save()
                 return render(request, 'profils/annonce_reussie.html', locals())
                       
@@ -122,6 +137,10 @@ def proposer_annonce(request):
     
     else :
         return redirect(connexion)
+        
+        
+def postuler_annonce(request, numero):
+    pass
     
     
     

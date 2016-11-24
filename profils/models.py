@@ -34,7 +34,7 @@ class Profil(models.Model):
 class Annonce (models.Model) :
 	""" Classe qui va gérer tout ce qui concerne les articles"""
 	titre = models.CharField(max_length=200)
-	boulot = models.CharField(max_length=50)
+	 #boulot = models.CharField(max_length=50)
 	annonce = models.TextField(null=False)
 	date = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name = "Date de dépôt")
 	prix = models.DecimalField(max_digits=5,decimal_places=2)
