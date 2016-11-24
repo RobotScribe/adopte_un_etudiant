@@ -39,12 +39,12 @@ class Annonce (models.Model) :
 	date = models.DateTimeField(auto_now_add=True, auto_now=False, verbose_name = "Date de dépôt")
 	prix = models.DecimalField(max_digits=5,decimal_places=2)
 	annonceur = models.CharField(max_length=100)
-    etudiant = models.CharField(max_length=100, null=True)
+	etudiant = models.CharField(max_length=100, null=True)
 	lieux = models.CharField(max_length=50)
 	distance_max = models.IntegerField()
 	numero = models.IntegerField()
-    #etat ne peux prendre que 3 valeurs : "a faire", "fait", "en cours"
-    etat = models.CharField(max_length=10)
+	#etat ne peux prendre que 3 valeurs : "a faire", "fait", "en cours"
+	etat = models.CharField(max_length=10)
 
 	def __str__(self) :
 		return self.titre 
