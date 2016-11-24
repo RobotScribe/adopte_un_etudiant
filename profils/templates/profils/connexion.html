@@ -10,6 +10,10 @@
 
 {% if user.is_authenticated %}
 
+Vous êtes connecté, {{ user.username }} !
+
+<li><a href="/proposer_annonce/">Proposez une annonce</a></li>
+
     {% if Bool %}
 
     Vous êtes connecté, {{ user.username }} !
