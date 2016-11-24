@@ -1,0 +1,12 @@
+<h1>Liste des annonces</h1>
+{% for annonce in annonces %}
+<h2>{{ annonce.titre }}</h2>
+Description : {{annonce.annonce }} <br/>
+Prix : {{ annonce.prix }} € <br/>
+lieux : {{ annonce.lieux }} <br/>
+<a href="{% url "lire_annonce" annonce.numero%}">Voir cette annonce</a>
+{% endfor %}
+
+
+
+

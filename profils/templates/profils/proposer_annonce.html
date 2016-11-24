@@ -1,0 +1,18 @@
+<h1>Nouvelle Annonce proposée par {{ request.user.username }}</h1>
+
+
+   
+
+<p>
+
+    <form method="post" enctype="multipart/form-data" action=".">
+
+       {% csrf_token %}
+
+       {{ form.as_p }}
+
+       <input type="submit"/>
+
+    </form>
+
+</p>
