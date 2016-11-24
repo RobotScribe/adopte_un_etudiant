@@ -10,7 +10,6 @@ def home(request):
 
 
 def inscription(request):
-    sauvegarde = False
     wrong_email = False
     wrong_username = False
     
@@ -28,8 +27,9 @@ def inscription(request):
                 user.username = form.cleaned_data["pseudo"]
                 user.first_name = form.cleaned_data["prenom"]
                 user.last_name = form.cleaned_data["nom"] 
-                user.email = form.cleaned_data["email"]            
-                user.password = form.cleaned_data["password"]
+                user.email = form.cleaned_data["email"]
+                password = form.cleaned_data["password"]
+                user.set_password(password)
                 user.is_staff = False
                 user.is_active = True
                 user.is_superuser = False
@@ -44,8 +44,7 @@ def inscription(request):
                     profil.ecole = form.cleaned_data["école"]
                 profil.save()
                 
-                print("inscription réussie")
-                return render(request, 'profils/inscription_reussie.html', locals())
+                return redirect(reverse(connexion), False)
                 
             else:
                 if len(User.objects.filter(email = emailForm)) != 0:
@@ -77,7 +76,6 @@ def connexion(request):
                 error = True
     else:
         form = ConnexionForm()
-
     return render(request, 'profils/connexion.html', locals())
     
 
