@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+
+<head>
+{% load static %}
+
+    <link rel="stylesheet" href="{% static 'style.css' %}" />
+	<title>Modifier profil</title>
+</head>>
+
+<body>
+
+<div class="background">
+<h1>Modifiez votre profil</h1>
+
+
+{% if wrong_password %}
+
+    <p>Votre mot de passe est incorrect!</p>
+
+{% endif %}
+
+{% if wrong_username %}
+
+    <p>Ce pseudo a déjà été utilisé.</p>
+
+{% endif %}
+
+   
+
+<p>
+
+    <form method="post" enctype="multipart/form-data" action=".">
+
+       {% csrf_token %}
+
+       {{ form.as_p }}
+
+       <input type="submit"/>
+
+    </form>
+
+</p>
+
+</div>
+</body>
+</html>
