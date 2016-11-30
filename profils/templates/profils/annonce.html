@@ -1,14 +1,20 @@
 <!DOCTYPE html>
 <html lang="fr">
-<title>
-<h1> Voici l'annonce <span class="small" > n°{{annonce.numero}} </span> proposée par {{annonce.annonceur}} le {{annonce.date|date:"DATE_FORMAT"}} </h1>
+
+<title> annonce n° {{annonce.numero}}
 </title>
 
+
+
 <body>
+<h1> Voici l'annonce <span class="small" > n°{{annonce.numero}} </span> proposée par {{annonce.annonceur}} le {{annonce.date|date:"DATE_FORMAT"}} </h1>
+
 
 <p> A {{ annonce.lieux}} </p>
 
 <p> Payé {{annonce.prix}} €</p>
+
+
 
 {% if Bool %}
 	

@@ -1,0 +1,35 @@
+
+
+.background {
+
+color:black;
+background-image:url(img/background2.jpg);
+background-repeat: no-repeat;
+background-attachment: fixed;
+background-size: cover;
+}
+
+.page-header {
+
+	font-family: "Times New Roman", Georgia, Serif;
+	margin : 0% 40%;
+}
+
+.logo {
+	margin : 00% 40%;
+
+}
+
+.banniere {
+	height:40px;
+	background-color:#00CCCC;
+}
+
+.element-banniere {
+	word-spacing: 100px;
+	color : black;
+	width: 400px;
+    height: 400px;
+    border: 200px double #FFFFFF;
+    flex-direction: row-reverse;
+}

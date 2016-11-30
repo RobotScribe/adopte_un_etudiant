@@ -119,12 +119,13 @@ def proposer_annonce(request):
                 annonce.distance_max=form.cleaned_data["distance_max"]
                 annonce.etat = "a faire"
                 print(request.user)
-                annonce.annonceur = user.username
+                annonce.annonceur = request.user.username
                 
                 list_annonces = Annonce.objects.all()# a changer #
                 list_num = []
                 for annonce_deja_creee in list_annonces:
                     list_num.append(annonce_deja_creee.numero)
+                
                 if len(list_num) == 0:
                     annonce.numero = 1
                 else:
