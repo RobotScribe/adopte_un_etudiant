@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+{% load static %}
+
+    <link rel="stylesheet" href="{% static 'style.css' %}" />
+	<title>Annonces</title>
+</head>
+
+
+<body>
+<div class="background">
+
+
+{% if etat == "a_faire" %}
+
+    <h1>Liste des annonces que vous avez proposées</h1>
+    <a href="/voir_annonces_perso/en_cours">Voir vos annonces à effectuer</a></br>
+    <a href="/voir_annonces_perso/fait">Voir vos annonces faites</a>
+    {% for annonce in annonces %}
+        <h2>{{ annonce.titre }}</h2>
+        Description : {{annonce.annonce }} <br/>
+        Prix : {{ annonce.prix }} € <br/>
+        lieux : {{ annonce.lieux }} <br/>
+        <a href="{% url "lire_annonce" annonce.numero%}">Voir cette annonce</a>
+    {% endfor %}
+
+{% elif etat == "en_cours" %}
+
+    <h1>Liste des annonces que vous devez effectuer</h1>
+    <a href="/voir_annonces_perso/a_faire">Voir vos annonces proposées</a></br>
+    <a href="/voir_annonces_perso/fait">Voir vos annonces faites</a>
+    {% for annonce in annonces_particulier %}
+        <h2>{{ annonce.titre }}</h2>
+        Description : {{annonce.annonce }} <br/>
+        Prix : {{ annonce.prix }} € <br/>
+        lieux : {{ annonce.lieux }} <br/>
+        <a href="{% url "lire_annonce" annonce.numero%}">Voir cette annonce</a>
+    {% endfor %}
+    {% for annonce in annonces_etudiant %}
+        <h2>{{ annonce.titre }}</h2>
+        Description : {{annonce.annonce }} <br/>
+        Prix : {{ annonce.prix }} € <br/>
+        lieux : {{ annonce.lieux }} <br/>
+        <a href="{% url "lire_annonce" annonce.numero%}">Voir cette annonce</a>
+    {% endfor %}
+    
+{% elif etat == "fait" %}
+
+    <h1>Liste des annonces que vous avez effectuées</h1>
+    <a href="/voir_annonces_perso/a_faire">Voir vos annonces proposées</a></br>
+    <a href="/voir_annonces_perso/en_cours">Voir vos annonces à effectuer</a>
+    {% for annonce in annonces_particulier %}
+        <h2>{{ annonce.titre }}</h2>
+        Description : {{annonce.annonce }} <br/>
+        Prix : {{ annonce.prix }} € <br/>
+        lieux : {{ annonce.lieux }} <br/>
+        <a href="{% url "lire_annonce" annonce.numero%}">Voir cette annonce</a>
+    {% endfor %}
+    {% for annonce in annonces_etudiant %}
+        <h2>{{ annonce.titre }}</h2>
+        Description : {{annonce.annonce }} <br/>
+        Prix : {{ annonce.prix }} € <br/>
+        lieux : {{ annonce.lieux }} <br/>
+        <a href="{% url "lire_annonce" annonce.numero%}">Voir cette annonce</a>
+    {% endfor %}
+
+
+{% else %}
+
+<h1>Mauvaise URl!</h1>
+
+{% endif %}
+
+</div>
+</body>
+</html>
+
