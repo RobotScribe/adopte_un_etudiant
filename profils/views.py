@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from profils.forms import InscriptionForm, ConnexionForm, AnnonceForm
-from profils.models import Profil, User, Annonce
+from profils.forms import *
+from profils.models import *
 from django.contrib.auth import authenticate, login, logout
 from django.core.urlresolvers import reverse
+from django.contrib.auth.decorators import login_required
 
 def home(request):
     if request.user.is_authenticated:
@@ -83,6 +84,8 @@ def connexion(request):
     return render(request, 'profils/connexion.html', locals())
     
 
+
+@login_required(login_url = '/connexion/')
 def deconnexion(request):
     logout(request)
     return redirect(reverse(home))
@@ -152,8 +155,68 @@ def postuler_annonce(request, numero):
                 pass
                 
     
-def test (request) :
-    return render (request, 'profils/test.html')
+def test(request):
+    return render(request, 'profils/test.html')
+    
+def profil(request):
+    if request.user.is_authenticated:
+        profil = Profil.objects.get(user = request.user)
+        return render(request, 'profils/voir_profil.html', locals())
+    else:
+        return redirect(connexion)
+        
+def modifier_profil(request):
+    print("ok0")
+    if request.user.is_authenticated:
+        profil = Profil.objects.get(user = request.user)
+        wrong_username = False
+        wrong_password = False
+        
+        print("ok1")
+        
+        if request.method == "POST":
+            form = ModifierProfilForm(request.POST)
+            password = form.cleaned_data["password"]
+            if form.is_valid:
+                if authenticate(username=request.user.username, password=password):                
+                    new_username = form.cleaned_data["pseudo"]
+                    if (len(User.objects.filter(pseudo = new_username)) == 0) or (new_username == request.user.username):
+                        profil.user.username = new_username
+                        profil.user.password = form.cleaned_data["password"]
+                        profil.photo = form.cleaned_data["photo"]
+                        profil.description = form.cleaned_data["description"]
+                        profil.is_student = form.cleaned_data["is_student"]
+                        if profil.is_student:
+                            profil.ecole = form.cleaned_data["école"]
+                        profil.save()
+                        return redirect(profil)
+                        
+                    else:
+                        wrong_username = True
+                        return render(request, 'profils/modifier_profil.html', locals())
+                else:
+                    wrong_password = True
+                    return render(request, 'profils/modifier_profil.html', locals())
+        else:
+            form = ModifierProfilForm()
+            return render(request, 'profils/modifier_profil.html', locals())
+        
+    else:
+        return redirect(connexion)
+    
+    
+    
+    
+    
+    
+    """
+    form = AnnonceForm(request.POST)
+    annonce.titre=form.cleaned_data["titre"]
+   """ 
+    
+    
+    
+    
     
     
     

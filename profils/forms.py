@@ -30,3 +30,13 @@ class AnnonceForm(forms.Form) :
 class PostulerAnnonceForm(forms.Form):
     Commentaires = forms.CharField(label = 'expliquez pourquoi le personne qui a postée cette annonce devrait vous prendre (facultatif)', required = False )
     
+class ModifierProfilForm(forms.Form):
+    password = forms.CharField(widget=forms.PasswordInput, label = "Mot de passe actuel")
+    pseudo = forms.CharField(label = "Nouveau pseudo")
+    new_password = forms.CharField(widget=forms.PasswordInput, label="Rentrez votre nouveau mot de passe")
+    photo = forms.ImageField(required=False, label = "Nouvelle photo (facultative)")
+    description = forms.CharField(required=False,label="Nouvelle description (facultative)")
+    is_student = forms.BooleanField(required=False,label = "cochez si vous êtes étudiant")
+    école = forms.CharField(required=False,label = "rentrez votre école si vous êtes étudiant")
+    
+    

@@ -11,5 +11,6 @@ urlpatterns = [
     url(r'^proposer_annonce/$',views.proposer_annonce),
     url(r'^postuler_annonce/(?P<numero>\d+$)',views.postuler_annonce, name = 'postuler_annonce'),
     url(r'^test/?$', views.test, name = 'test'),
-
+    url(r'^profil/?$', views.profil),
+    url(r'^modifier_profil/?$', views.modifier_profil),
 ]
