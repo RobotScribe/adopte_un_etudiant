@@ -64,24 +64,27 @@ def inscription(request):
     
     
 def connexion(request):
-    error = False
-    
-    if request.method == "POST":
-        form = ConnexionForm(request.POST)
-        if form.is_valid():
-            username = form.cleaned_data["username"]
-            password = form.cleaned_data["password"]
-            user = authenticate(username=username, password=password)  # Nous vérifions si les données sont correctes
-            print(user)
-            if user:  # Si l'objet renvoyé n'est pas None
-                login(request, user)  # nous connectons l'utilisateur
-                return redirect(home)
-            else: # sinon une erreur sera affichée
-                error = True
-                
+    if not(request.user.is_authenticated):
+        error = False
+        
+        if request.method == "POST":
+            form = ConnexionForm(request.POST)
+            if form.is_valid():
+                username = form.cleaned_data["username"]
+                password = form.cleaned_data["password"]
+                user = authenticate(username=username, password=password)  # Nous vérifions si les données sont correctes
+                print(user)
+                if user:  # Si l'objet renvoyé n'est pas None
+                    login(request, user)  # nous connectons l'utilisateur
+                    return redirect(home)
+                else: # sinon une erreur sera affichée
+                    error = True
+                    
+        else:
+            form = ConnexionForm()
+        return render(request, 'profils/connexion.html', locals())
     else:
-        form = ConnexionForm()
-    return render(request, 'profils/connexion.html', locals())
+        return redirect('/')    
     
 
 
@@ -94,7 +97,7 @@ def deconnexion(request):
     
 
 def list_annonces(request):
-    annonces = Annonce.objects.all()
+    annonces = Annonce.objects.filter(etat="a_faire")
     return render(request,'profils/list_annonces.html',locals())
 
 def annonce(request,numero) :
@@ -120,7 +123,7 @@ def proposer_annonce(request):
                 annonce.prix=form.cleaned_data["prix"]
                 annonce.lieux = form.cleaned_data["lieux"]
                 annonce.distance_max=form.cleaned_data["distance_max"]
-                annonce.etat = "a faire"
+                annonce.etat = "a_faire"
                 print(request.user)
                 annonce.annonceur = request.user.username
                 
@@ -176,20 +179,32 @@ def modifier_profil(request):
         
         if request.method == "POST":
             form = ModifierProfilForm(request.POST)
-            password = form.cleaned_data["password"]
-            if form.is_valid:
+            
+            if form.is_valid():
+                password = form.cleaned_data["password"]
                 if authenticate(username=request.user.username, password=password):                
                     new_username = form.cleaned_data["pseudo"]
-                    if (len(User.objects.filter(pseudo = new_username)) == 0) or (new_username == request.user.username):
-                        profil.user.username = new_username
-                        profil.user.password = form.cleaned_data["password"]
+                    if (len(User.objects.filter(username = new_username)) == 0) or (new_username == request.user.username):
+                        user = profil.user
+                        user.username = new_username
+                        new_password = form.cleaned_data["new_password"]
+                        user.set_password(new_password)
+                        user.save() 
+                        profil.user = user
                         profil.photo = form.cleaned_data["photo"]
                         profil.description = form.cleaned_data["description"]
                         profil.is_student = form.cleaned_data["is_student"]
                         if profil.is_student:
                             profil.ecole = form.cleaned_data["école"]
+                            
+                           
                         profil.save()
-                        return redirect(profil)
+                        
+                        authenticate(username=user.username, password=new_password)
+                        login(request, user)
+                        
+                        
+                        return redirect('/profil/')
                         
                     else:
                         wrong_username = True
@@ -203,18 +218,49 @@ def modifier_profil(request):
         
     else:
         return redirect(connexion)
+        
+        
+
+def voir_annonces_afaire(request, etat):
+    profil = Profil.objects.get(user = request.user)
+    if etat == "a_faire":
+        annonces = Annonce.objects.filter(etat="a_faire", annonceur = profil)
+        return render(request,'profils/list_annonces_perso.html',locals())
+    if etat == "en_cours":
+        annonces_particulier = Annonce.objects.filter(etat="en_cours", annonceur = profil)
+        annonces_etudiant = Annonce.objects.filter(etat="en_cours", etudiant = profil)      
+        return render(request,'profils/list_annonces_perso.html',locals())
+    if etat == "fait":
+        annonces_particulier = Annonce.objects.filter(etat="fait", annonceur = profil)
+        annonces_etudiant = Annonce.objects.filter(etat="fait", etudiant = profil)  
+        return render(request,'profils/list_annonces_perso.html',locals())
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     
-    
-    
-    
-    
-    
-    """
-    form = AnnonceForm(request.POST)
-    annonce.titre=form.cleaned_data["titre"]
-   """ 
-    
-    
+
     
     
     

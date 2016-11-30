@@ -43,7 +43,7 @@ class Annonce (models.Model) :
 	lieux = models.CharField(max_length=50)
 	distance_max = models.IntegerField()
 	numero = models.IntegerField()
-	#etat ne peux prendre que 3 valeurs : "a faire", "fait", "en cours"
+	#etat ne peux prendre que 3 valeurs : "a_faire", "fait", "en_cours"
 	etat = models.CharField(max_length=10)
 
 	def __str__(self) :

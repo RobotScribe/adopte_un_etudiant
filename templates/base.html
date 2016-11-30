@@ -39,23 +39,23 @@
 
             {% if not request.user.is_authenticated %}
 
-              <a href="/inscription/">Inscription</a>
+              <a href="/inscription">Inscription</a>
 
-              <a href="/connexion/">Connexion</a>
+              <a href="/connexion">Connexion</a>
             
             {% endif %}
 
-            <a href="/annonces/">Voir les annonces</a>
+            <a href="/annonces">Voir les annonces</a>
             
-            <a href="/proposer_annonce/">Proposez une annonce</a>
+            <a href="/proposer_annonce">Proposez une annonce</a>
 
             {% if request.user.is_authenticated %}
 
-              <a href="/voir_annonce_perso/">Voir vos annonces</a>
+              <a href="/voir_annonces_perso/a_faire">Voir vos annonces</a>
               
-              <a href="/profil/">Profil</a>
+              <a href="/profil">Profil</a>
             
-              <a href="/deconnexion/">Déconnexion</a>
+              <a href="/deconnexion">Déconnexion</a>
             {% endif %}
        
 
