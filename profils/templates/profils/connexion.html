@@ -1,5 +1,15 @@
-<title> Connexion 
-</title>
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+{% load static %}
+
+    <link rel="stylesheet" href="{% static 'style.css' %}" />
+	<title>Connexion</title>
+</head>
+
+<body>
+<div class="background">
 
 <h1>Connexion</h1>
 
@@ -33,3 +43,7 @@ Vous êtes connecté, {{ user.username }} !
 </form>
 
 {% endif %}
+
+</div>
+</body>
+</html>

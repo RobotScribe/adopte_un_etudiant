@@ -1,3 +1,16 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+{% load static %}
+
+    <link rel="stylesheet" href="{% static 'style.css' %}" />
+	<title>Réussite !</title>
+</head>
+
+<body>
+<div class="background">
+
 <h1> Votre annonce a bien été enregistrée {{ user.username }} </h1>
 
 <li><a> titre : {{ annonce.titre }} </a></li>
@@ -8,4 +21,6 @@
 
 <li> <a href="{% url "home" %}">Retourner sur la page d'accueil</a> </li>
 
-
+</div>
+</body>
+</html>

@@ -152,7 +152,8 @@ def postuler_annonce(request, numero):
                 pass
                 
     
-    
+def test (request) :
+    return render (request, 'profils/test.html')
     
     
     

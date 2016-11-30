@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html lang="fr">
+<head>
+{% load static %}
 
-<title> annonce n° {{annonce.numero}}
-</title>
-
+    <link rel="stylesheet" href="{% static 'style.css' %}" />
+	<title> annonce n° {{annonce.numero}}</title>
+</head>
 
 
 <body>
+<div class="background">
+
 <h1> Voici l'annonce <span class="small" > n°{{annonce.numero}} </span> proposée par {{annonce.annonceur}} le {{annonce.date|date:"DATE_FORMAT"}} </h1>
 
 
@@ -26,6 +30,7 @@
 
 <a href="{% url "postuler_annonce" numero%}">Postulez pour cette annonce</a>
 
+</div>
 </body>
-
+</html>
 
