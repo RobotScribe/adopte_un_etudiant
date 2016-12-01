@@ -7,10 +7,12 @@
     <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'style.css' %}" >
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 	<title>Connexion</title>
 </head>
 
-<body>
+<body >
+	
 
 
 {% if error %}
@@ -19,8 +21,8 @@
 
 {% endif %}
 
-<div class="background">
-<div class="container-fluid">
+<div class="background" style="width: screenWidth; height:screenHeight">
+<div class="container" style="margin : auto">
 <form class="form-horizontal col-lg-6 col-lg-push-3" method="post" action=".">
 <fieldset>
 {% csrf_token %}
@@ -61,13 +63,18 @@
 
 </fieldset>
 </form>
+<br>
 </div>	
 
 </div>
 
-<div class="remplissage" style="max-height: : 400px">
-<div clas="row-fluid">
+
 </div>
 </div>
+<script >
+	var screen=document.getElementById('niark');
+    var screenWidth = parseFloat(window.getComputedStyle(screen).width),
+    screenHeight = parseFloat(window.getComputedStyle(screen).height);
+</script>
 </body>
 </html>

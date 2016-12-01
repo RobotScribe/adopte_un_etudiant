@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+{% load static %}
+
+    <link rel="stylesheet" href="{% static 'style.css' %}" />
+	<title> annonce n° {{annonce.numero}}</title>
+</head>
+
+
+<body>
+<div class="background">
+
+<h1> Voici l'annonce proposée par {{annonce.annonceur}} le {{annonce.date|date:"DATE_FORMAT"}} </h1>
+
+
+<p> A {{ annonce.lieux}} </p>
+
+<p> Payé {{annonce.prix}} €</p>
+
+
+
+{% if Bool %}
+	
+	<p> Possibilité de trajet jusuqu'à {{annonce.distance_max}} </p>
+
+{% endif %}
+
+<p>	Description : {{annonce.annonce}} </p>
+
+{% if annonce.postulant == None %}
+
+<a href="{% url "modifier_annonce" numero%}">Modifiez cette annonce</a></br>
+<a href="{% url "supprimer_annonce" numero%}">Supprimez cette annonce</a>
+
+{% else %}
+
+<p> {{ annonce.postulant}} a postulé pour votre annonce! </p>
+<p> Message : {{ annonce.message_postulant}} </p>
+<a href="{% url "accepter_annonce" numero%}">Accepter</a></br>
+<a href="{% url "refuser_annonce" numero%}">Refuser</a></br>
+
+{% endif %}
+
+
+
+</div>
+</body>
+</html>
+
