@@ -4,14 +4,13 @@
 <head>
 {% load static %}
 
-    <link rel="stylesheet" href="{% static 'style.css' %}" />
+    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'style.css' %}" >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Connexion</title>
 </head>
 
 <body>
-<div class="background">
-
-<h1>Connexion</h1>
 
 
 {% if error %}
@@ -20,30 +19,55 @@
 
 {% endif %}
 
+<div class="background">
+<div class="container-fluid">
+<form class="form-horizontal col-lg-6 col-lg-push-3" method="post" action=".">
+<fieldset>
+{% csrf_token %}
 
-{% if user.is_authenticated %}
 
-Vous êtes connecté, {{ user.username }} !
 
-<li><a href="/">Accueil</a></li>
-<li><a href="/proposer_annonce/">Proposez une annonce</a></li>
-<li><a href="/annonces/">Voir les annonces</a></li>
-<li><a href="/deconnexion/">Déconnexion</a></li>
+	<div class="form-group" style ="margin :20% 0% 0% 0%">
+		<div class="row">
+		<legend class="col-lg-3 col-lg-offset-5" style="text-align: center">
+			Connexion
+		</legend>
+		</div>
 
-{% else %}
+	<div class="row">
+		<div class="form-group ">
+			
 
-<form method="post" action=".">
+			<label for="id_username" class="col-lg-2 col-lg-offset-3" style="text-align: center">Pseudo :</label> <input id="id_username" name="username" type="text" required /> 
+			
+			</div>
+		</div>	
+	</div>
 
-    {% csrf_token %}
+	<div class="row">
+    	<div class="form-group">
+    		
+      		<label for="id_password" class="col-lg-2 col-lg-offset-3" style="text-align: center">Mot de passe :</label>  <input id="id_password" name="password" type="password" required />
+      </div>
+    </div>
+  
 
-    {{ form.as_p }}
+ 	<div class="row-fluid">
+    <div class="col-lg-2 col-lg-offset-5" style="text-align: center">
+    <input class="btn btn-primary" type="submit" style="background-color:#212121"> </input> </div>	
+    </div>
+</div>
 
-    <input type="submit" value="Se connecter" />
 
+</fieldset>
 </form>
+</div>	
 
-{% endif %}
+</div>
 
+<div class="remplissage" style="max-height: : 400px">
+<div clas="row-fluid">
+</div>
 </div>
 </body>
 </html>
