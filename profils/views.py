@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from profils.forms import *
 from profils.models import *
 from django.contrib.auth import authenticate, login, logout
@@ -104,6 +104,66 @@ def annonce(request,numero) :
     annonce = Annonce.objects.get(numero=numero)
     Bool = annonce.distance_max != 0
     return render(request,'profils/annonce.html',locals())
+
+
+@login_required(login_url = '/connexion/')   
+def annonce_perso(request,numero):
+    annonce = Annonce.objects.get(numero=numero)
+    if annonce.annonceur == request.user.username:
+        Bool = annonce.distance_max != 0
+        return render(request,'profils/annonce_perso.html',locals())
+    else:
+        raise Http404
+        
+        
+@login_required(login_url = '/connexion/')   
+def modifier_annonce(request,numero):
+    annonce = Annonce.objects.get(numero=numero)
+    if annonce.annonceur == request.user.username:
+        wrong_password = False
+        if request.method == "POST":
+            form = ModifierAnnonceForm(request.POST)
+            if form.is_valid():
+                password = form.cleaned_data["password"]
+                if authenticate(username=request.user.username, password=password):
+                    annonce.titre = form.cleaned_data["titre"]
+                    annonce.annonce = form.cleaned_data["annonce"]
+                    annonce.prix = form.cleaned_data["prix"]
+                    annonce.lieux = form.cleaned_data["lieux"]
+                    annonce.distance_max = form.cleaned_data["distance_max"]
+                    annonce.save()
+                    return redirect('/voir_annonces_perso/a_faire')
+                else:
+                    wrong_password = True
+                    return render(request, 'profils/modifier_annonce.html', locals())
+        else:
+            form = ModifierAnnonceForm()
+            return render(request, 'profils/modifier_annonce.html', locals())
+    else:
+        raise Http404
+        
+        
+@login_required(login_url = '/connexion/')   
+def supprimer_annonce(request,numero):
+    annonce = Annonce.objects.get(numero=numero)
+    if annonce.annonceur == request.user.username:
+        wrong_password = False
+        if request.method == "POST":
+            form = SupprimerAnnonceForm(request.POST)
+            if form.is_valid():
+                password = form.cleaned_data["password"]
+                if authenticate(username=request.user.username, password=password):
+                    annonce.delete()
+                    return redirect('/voir_annonces_perso/a_faire')
+                else:
+                    wrong_password = True
+                    return render(request, 'profils/supprimer_annonce.html', locals())
+        else:
+            form = SupprimerAnnonceForm()
+            return render(request, 'profils/supprimer_annonce.html', locals())
+    else:
+        raise Http404
+        
     
 def proposer_annonce(request):
     if request.user.is_authenticated:

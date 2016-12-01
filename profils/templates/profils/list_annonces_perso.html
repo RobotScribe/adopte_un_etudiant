@@ -23,7 +23,7 @@
         Description : {{annonce.annonce }} <br/>
         Prix : {{ annonce.prix }} € <br/>
         lieux : {{ annonce.lieux }} <br/>
-        <a href="{% url "lire_annonce" annonce.numero%}">Voir cette annonce</a>
+        <a href="{% url "lire_annonce_perso" annonce.numero%}">Voir cette annonce</a>
     {% endfor %}
 
 {% elif etat == "en_cours" %}
@@ -36,14 +36,14 @@
         Description : {{annonce.annonce }} <br/>
         Prix : {{ annonce.prix }} € <br/>
         lieux : {{ annonce.lieux }} <br/>
-        <a href="{% url "lire_annonce" annonce.numero%}">Voir cette annonce</a>
+        <a href="{% url "lire_annonce_perso" annonce.numero%}">Voir cette annonce</a>
     {% endfor %}
     {% for annonce in annonces_etudiant %}
         <h2>{{ annonce.titre }}</h2>
         Description : {{annonce.annonce }} <br/>
         Prix : {{ annonce.prix }} € <br/>
         lieux : {{ annonce.lieux }} <br/>
-        <a href="{% url "lire_annonce" annonce.numero%}">Voir cette annonce</a>
+        <a href="{% url "lire_annonce_perso" annonce.numero%}">Voir cette annonce</a>
     {% endfor %}
     
 {% elif etat == "fait" %}
@@ -56,14 +56,14 @@
         Description : {{annonce.annonce }} <br/>
         Prix : {{ annonce.prix }} € <br/>
         lieux : {{ annonce.lieux }} <br/>
-        <a href="{% url "lire_annonce" annonce.numero%}">Voir cette annonce</a>
+        <a href="{% url "lire_annonce_perso" annonce.numero%}">Voir cette annonce</a>
     {% endfor %}
     {% for annonce in annonces_etudiant %}
         <h2>{{ annonce.titre }}</h2>
         Description : {{annonce.annonce }} <br/>
         Prix : {{ annonce.prix }} € <br/>
         lieux : {{ annonce.lieux }} <br/>
-        <a href="{% url "lire_annonce" annonce.numero%}">Voir cette annonce</a>
+        <a href="{% url "lire_annonce_perso" annonce.numero%}">Voir cette annonce</a>
     {% endfor %}
 
 

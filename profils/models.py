@@ -45,6 +45,8 @@ class Annonce (models.Model) :
 	numero = models.IntegerField()
 	#etat ne peux prendre que 3 valeurs : "a_faire", "fait", "en_cours"
 	etat = models.CharField(max_length=10)
+	postulant = models.CharField(max_length=100, null=True)
+	message_postulant = models.TextField(max_length=1000,null=True)
 
 	def __str__(self) :
 		return self.titre 

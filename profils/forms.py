@@ -39,4 +39,29 @@ class ModifierProfilForm(forms.Form):
     is_student = forms.BooleanField(required=False,label = "cochez si vous êtes étudiant")
     école = forms.CharField(required=False,label = "rentrez votre école si vous êtes étudiant")
     
+
+class ModifierAnnonceForm(forms.Form):
+    password = forms.CharField(widget=forms.PasswordInput, label = "Mot de passe actuel")
+    titre = forms.CharField(max_length=200)
+    annonce = forms.CharField(widget=forms.Textarea, label="Décrivez votre petite annonce")
+    prix = forms.DecimalField(max_digits=5,decimal_places=2)
+    lieux = forms.CharField(max_length=50)
+    distance_max = forms.IntegerField(label="Indiquez la distance maximale en km que vous pouvez faire pour chercher un étudiant. Mettez 0 si vous ne voulez pas aller le chercher")
+    
+class SupprimerAnnonceForm(forms.Form):
+    password = forms.CharField(widget=forms.PasswordInput, label = "Mot de passe actuel")
+    
+
+
+
+
+
+
+
+
+
+
+
+
+    
     
