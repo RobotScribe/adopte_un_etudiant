@@ -34,12 +34,30 @@
 <a href="{% url "supprimer_annonce" numero%}">Supprimez cette annonce</a>
 
 {% else %}
-
-<p> {{ annonce.postulant}} a postulé pour votre annonce! </p>
-<p> Message : {{ annonce.message_postulant}} </p>
-<a href="{% url "accepter_annonce" numero%}">Accepter</a></br>
-<a href="{% url "refuser_annonce" numero%}">Refuser</a></br>
-
+    {% if annonce.postulant == request.user.username %}
+        {% if annonce.etudiant == None %}
+            <p> Vous avez postulé pour cette annonce! </p>
+            <p> Message : {{ annonce.message_postulant}} </p>
+        {% elif annonce.etat == "en_cours" %}
+            <p> Votre demande a été acceptée. Il vous faut maintenant effectuer cette annonce! </p>
+            <p> Contactez {{annonce.annonceur}} : user_annonceur.email </p>
+        {% else %}
+            <p>Vous avez bien effectué cette annonce</p>
+        {% endif %}
+    {% elif annonce.etudiant == None %}
+        
+        <p> {{ annonce.postulant}} a postulé pour cette annonce! </p>
+        <p> Message : {{ annonce.message_postulant}} </p>
+        <a href="{% url "accepter_annonce" numero%}">Accepter</a></br>
+        <a href="{% url "refuser_annonce" numero%}">Refuser</a></br>
+    {% elif annonce.etat == "en_cours" %}
+        <p> Vous avez accepter que {{ annonce.postulant}} effectue cette annonce! </p>
+        <p> Message : {{ annonce.message_postulant}} </p>
+        <a href="{% url "annuler_annonce" numero%}">Annuler</a></br>
+        <a href="{% url "annonce_effectuee" numero%}">L'annonce a bien été effectuée</a></br>
+    {% else %}
+        <p> {{ annonce.postulant}} a bien effectué cette annonce! </p>
+    {% endif %}
 {% endif %}
 
 

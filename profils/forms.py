@@ -48,7 +48,7 @@ class ModifierAnnonceForm(forms.Form):
     lieux = forms.CharField(max_length=50)
     distance_max = forms.IntegerField(label="Indiquez la distance maximale en km que vous pouvez faire pour chercher un étudiant. Mettez 0 si vous ne voulez pas aller le chercher")
     
-class SupprimerAnnonceForm(forms.Form):
+class DemanderPasswordForm(forms.Form):
     password = forms.CharField(widget=forms.PasswordInput, label = "Mot de passe actuel")
     
 

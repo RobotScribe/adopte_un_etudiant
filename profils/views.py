@@ -109,7 +109,8 @@ def annonce(request,numero) :
 @login_required(login_url = '/connexion/')   
 def annonce_perso(request,numero):
     annonce = Annonce.objects.get(numero=numero)
-    if annonce.annonceur == request.user.username:
+    user_annonceur = User.objects.get(username=annonce.annonceur)
+    if ((annonce.annonceur == request.user.username) or(annonce.postulant == request.user.username)):
         Bool = annonce.distance_max != 0
         return render(request,'profils/annonce_perso.html',locals())
     else:
@@ -149,7 +150,7 @@ def supprimer_annonce(request,numero):
     if annonce.annonceur == request.user.username:
         wrong_password = False
         if request.method == "POST":
-            form = SupprimerAnnonceForm(request.POST)
+            form = DemanderPasswordForm(request.POST)
             if form.is_valid():
                 password = form.cleaned_data["password"]
                 if authenticate(username=request.user.username, password=password):
@@ -159,7 +160,7 @@ def supprimer_annonce(request,numero):
                     wrong_password = True
                     return render(request, 'profils/supprimer_annonce.html', locals())
         else:
-            form = SupprimerAnnonceForm()
+            form = DemanderPasswordForm()
             return render(request, 'profils/supprimer_annonce.html', locals())
     else:
         raise Http404
@@ -211,11 +212,27 @@ def proposer_annonce(request):
         return redirect(connexion)
         
         
+@login_required(login_url = '/connexion/')           
 def postuler_annonce(request, numero):
-    if request.user.is_authenticated:
-        if request.method == "POST":
-            if form.is_valid():
-                pass
+    profil = Profil.objects.get(user=request.user)
+    annonce = Annonce.objects.get(numero=numero)
+    if profil.is_student:#On vérifie que le postulant est bien étudiant
+        if annonce.annonceur != profil.user.username:#On vérifie qu'il ne postule pas à sa propre annonce
+            form = PostulerAnnonceForm(request.POST)
+            if request.method == "POST":
+                if form.is_valid():
+                    annonce.postulant = profil.user.username
+                    annonce.message_postulant = form.cleaned_data["Commentaires"]
+                    annonce.etat = "en_cours"
+                    annonce.save()
+                    return redirect('/voir_annonces_perso/en_cours/')
+            else:
+                form = PostulerAnnonceForm()
+                return render(request, 'profils/postuler_annonce.html', locals())
+        else:
+            raise Http404          
+    else:
+        raise Http404
                 
     
 def test(request):
