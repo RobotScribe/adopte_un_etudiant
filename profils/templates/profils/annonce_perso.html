@@ -35,16 +35,18 @@
 
 {% else %}
     {% if annonce.postulant == request.user.username %}
-        {% if annonce.etudiant == None %}
+        {% if annonce.etudiant == '' %}
             <p> Vous avez postulé pour cette annonce! </p>
             <p> Message : {{ annonce.message_postulant}} </p>
+            <a href="{% url "annuler_annonce" numero%}">Annuler votre demande de réservation</a></br>
         {% elif annonce.etat == "en_cours" %}
             <p> Votre demande a été acceptée. Il vous faut maintenant effectuer cette annonce! </p>
             <p> Contactez {{annonce.annonceur}} : user_annonceur.email </p>
+            <a href="{% url "annuler_annonce" numero%}">Annuler votre demande de réservation</a></br>
         {% else %}
             <p>Vous avez bien effectué cette annonce</p>
         {% endif %}
-    {% elif annonce.etudiant == None %}
+    {% elif annonce.etudiant == '' %}
         
         <p> {{ annonce.postulant}} a postulé pour cette annonce! </p>
         <p> Message : {{ annonce.message_postulant}} </p>

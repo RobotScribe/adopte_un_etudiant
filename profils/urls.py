@@ -17,4 +17,8 @@ urlpatterns = [
     url(r'^annonce_perso/(?P<numero>\d+$)',views.annonce_perso, name= 'lire_annonce_perso'),
     url(r'^modifier_annonce/(?P<numero>\d+$)',views.modifier_annonce, name= 'modifier_annonce'),
     url(r'^supprimer_annonce/(?P<numero>\d+$)',views.supprimer_annonce, name= 'supprimer_annonce'),
+    url(r'^annuler_annonce/(?P<numero>\d+$)', views.annuler_annonce, name = 'annuler_annonce'),
+    url(r'^accepter_annonce/(?P<numero>\d+$)', views.accepter_annonce, name = 'accepter_annonce'),
+    url(r'^refuser_annonce/(?P<numero>\d+$)', views.refuser_annonce, name = 'refuser_annonce'),
+    url(r'^annonce_effectuee/(?P<numero>\d+$)', views.annonce_effectuee, name = 'annonce_effectuee'),
 ]

@@ -36,9 +36,14 @@
         Description : {{annonce.annonce }} <br/>
         Prix : {{ annonce.prix }} € <br/>
         lieux : {{ annonce.lieux }} <br/>
+        <a href="{% url "lire_annonce_perso" annonce.numero%}">Voir cette annonce</a>        
+    {% endfor %}
+        {% for annonce in annonces_postulees %}
+        <h2>{{ annonce.titre }}</h2>
+        Description : {{annonce.annonce }} <br/>
+        Prix : {{ annonce.prix }} € <br/>
+        lieux : {{ annonce.lieux }} <br/>
         <a href="{% url "lire_annonce_perso" annonce.numero%}">Voir cette annonce</a>
-
-            
     {% endfor %}
     {% for annonce in annonces_etudiant %}
         <h2>{{ annonce.titre }}</h2>

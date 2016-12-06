@@ -225,7 +225,7 @@ def postuler_annonce(request, numero):
                     annonce.message_postulant = form.cleaned_data["Commentaires"]
                     annonce.etat = "en_cours"
                     annonce.save()
-                    return redirect('/voir_annonces_perso/en_cours/')
+                    return redirect('/voir_annonces_perso/en_cours')
             else:
                 form = PostulerAnnonceForm()
                 return render(request, 'profils/postuler_annonce.html', locals())
@@ -299,19 +299,60 @@ def modifier_profil(request):
         
 
 def voir_annonces_afaire(request, etat):
+    print("ok1")
     profil = Profil.objects.get(user = request.user)
+    pseudo = request.user.username
+    print(pseudo)
     if etat == "a_faire":
-        annonces = Annonce.objects.filter(etat="a_faire", annonceur = profil)
+        annonces = Annonce.objects.filter(etat="a_faire", annonceur = pseudo)
         return render(request,'profils/list_annonces_perso.html',locals())
     if etat == "en_cours":
-        annonces_particulier = Annonce.objects.filter(etat="en_cours", annonceur = profil)
-        annonces_etudiant = Annonce.objects.filter(etat="en_cours", etudiant = profil)      
+        print("ok2encours")
+        annonces_particulier = Annonce.objects.filter(etat="en_cours", annonceur = pseudo)
+        annonces_postulees = Annonce.objects.filter(etat="en_cours", postulant = pseudo)
+        print(len(annonces_postulees))
+        annonces_etudiant = Annonce.objects.filter(etat="en_cours", etudiant = pseudo)      
         return render(request,'profils/list_annonces_perso.html',locals())
     if etat == "fait":
-        annonces_particulier = Annonce.objects.filter(etat="fait", annonceur = profil)
-        annonces_etudiant = Annonce.objects.filter(etat="fait", etudiant = profil)  
+        annonces_particulier = Annonce.objects.filter(etat="fait", annonceur = pseudo)
+        annonces_etudiant = Annonce.objects.filter(etat="fait", etudiant = pseudo)  
         return render(request,'profils/list_annonces_perso.html',locals())
+        
+        
 
+@login_required(login_url = '/connexion/')          
+def annuler_annonce(request, numero):
+    annonce = Annonce.objects.get(numero=numero)
+    if ((annonce.postulant == request.user.username) or (annonce.annonceur == request.user.username)):
+        wrong_password = False
+        if request.method == "POST":
+            form = DemanderPasswordForm(request.POST)
+            if form.is_valid():
+                password = form.cleaned_data["password"]
+                if authenticate(username=request.user.username, password=password):
+                    annonce.postulant = None
+                    annonce.etudiant = ''
+                    annonce.etat = "a_faire"
+                    annonce.save()
+                    return redirect('/voir_annonces_perso/en_cours')
+                else:
+                    wrong_password = True
+                    return render(request, 'profils/annuler_annonce_etudiant.html', locals())
+        else:
+            form = DemanderPasswordForm()
+            return render(request, 'profils/annuler_annonce_etudiant.html', locals())
+    else:
+        raise Http404
+        
+def accepter_annonce(request, numero):
+    pass
+    
+def refuser_annonce(request, numero):
+    pass
+    
+def annonce_effectuee(request, numero):
+    pass
+        
 
 
 
