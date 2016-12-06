@@ -13,7 +13,7 @@ urlpatterns = [
     url(r'^test/?$', views.test, name = 'test'),
     url(r'^profil/?$', views.profil, name = 'profil'),
     url(r'^modifier_profil/?$', views.modifier_profil),
-    url(r'^voir_annonces_perso/(?P<etat>\w+$)', views.voir_annonces_afaire),
+    url(r'^voir_annonces_perso/(?P<etat>\w+$)', views.voir_annonces_perso),
     url(r'^annonce_perso/(?P<numero>\d+$)',views.annonce_perso, name= 'lire_annonce_perso'),
     url(r'^modifier_annonce/(?P<numero>\d+$)',views.modifier_annonce, name= 'modifier_annonce'),
     url(r'^supprimer_annonce/(?P<numero>\d+$)',views.supprimer_annonce, name= 'supprimer_annonce'),

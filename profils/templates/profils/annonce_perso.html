@@ -41,7 +41,7 @@
             <a href="{% url "annuler_annonce" numero%}">Annuler votre demande de réservation</a></br>
         {% elif annonce.etat == "en_cours" %}
             <p> Votre demande a été acceptée. Il vous faut maintenant effectuer cette annonce! </p>
-            <p> Contactez {{annonce.annonceur}} : user_annonceur.email </p>
+            <p> Contactez {{annonce.annonceur}} : {{user_annonceur.email}} </p>
             <a href="{% url "annuler_annonce" numero%}">Annuler votre demande de réservation</a></br>
         {% else %}
             <p>Vous avez bien effectué cette annonce</p>
@@ -53,7 +53,7 @@
         <a href="{% url "accepter_annonce" numero%}">Accepter</a></br>
         <a href="{% url "refuser_annonce" numero%}">Refuser</a></br>
     {% elif annonce.etat == "en_cours" %}
-        <p> Vous avez accepter que {{ annonce.postulant}} effectue cette annonce! </p>
+        <p> Vous avez accepter que {{ annonce.postulant}} effectue cette annonce!</br>Contactez le : {{user_etudiant.email}}</p>
         <p> Message : {{ annonce.message_postulant}} </p>
         <a href="{% url "annuler_annonce" numero%}">Annuler</a></br>
         <a href="{% url "annonce_effectuee" numero%}">L'annonce a bien été effectuée</a></br>
