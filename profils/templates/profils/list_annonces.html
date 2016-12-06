@@ -24,7 +24,7 @@
         <img src="{% static 'img/logo.png' %}" alt="mon image" width="10%" height="10%">
     </div>
     <div class="navbar-header" >
-      <a class="navbar-brand" href="#" style="color :#FFFFFF">Adopte un etudiant</a>
+      <a class="navbar-brand" href="/" style="color :#FFFFFF">Adopte un etudiant</a>
     </div>
     <div id="navbar" class="collapse navbar-collapse" >
       <ul class="nav navbar-nav" style="float:right; margin : -5% 0 0 0" >
@@ -61,7 +61,7 @@
 				</div>
 			</div>
 
-			<div class="col-lg-4 col-md-4 col-md-offset-1 col-lg-offset-1">
+			<div class="col-lg-4 col-md-4 col-md-offset-1 col-lg-offset-1"">
 				<div class="panel panel-default" style="text-align: center; border-radius: 50px; border-color:#000000; background-color: #BBDEFB">
 					<h2 class="panel-title" style="border-radius: 50px;">{{ annonce.titre }}</h2>
 					Description : {{annonce.annonce }} <br/>
@@ -69,13 +69,15 @@
 					lieux : {{ annonce.lieux }} <br/>
 					<a href="{% url "lire_annonce" annonce.numero%}">Voir cette annonce</a>
 				</div>
-			<div>
-			
-			</div>	
-
+			</div>
 		</div>
 {% endfor %}
-
+toto
+{{ annonces.1.prix}}
+totot
+</div>
+<div class="row">
+{{ annonces.7 }}
 </div>
 </body>
 </html>
