@@ -25,6 +25,7 @@ def inscription(request):
             pseudoForm = form.cleaned_data["pseudo"]
             if (len(User.objects.filter(email = emailForm)) == 0) and (len(User.objects.filter(username = pseudoForm))) == 0:
                 print("test ok")
+                print(form)
                 profil = Profil()
                 user = User()
                 user.username = form.cleaned_data["pseudo"]
@@ -98,6 +99,8 @@ def deconnexion(request):
 
 def list_annonces(request):
     annonces = Annonce.objects.filter(etat="a_faire")
+    nb_q_annonce = len(annonces) // 2
+    nb_r_annonce = len(annonces) % 2  
     return render(request,'profils/list_annonces.html',locals())
 
 def annonce(request,numero) :

@@ -43,19 +43,36 @@
 <!-- affichage des annonces -->
 <div class="row" > 
 
-	<div class="row" style="background-color: #2196F3">
+	<div class="row" style="background-color: #2196F3; text-align: center;">
 		<div class="col-lg-4 col-lg-offset-4">
 			<h1 style="color:#212121">Liste des annonces</h1>
 		</div>
 	</div>
+	<br>
+	{% for annonce in annonces %}	
+		<div class="row">
+			<div class="col-lg-4 col-md-4 col-md-offset-1 col-lg-offset-1">
+				<div class="panel panel-default" style="text-align: center; border-radius: 50px; border-color:#000000; background-color: #BBDEFB">
+					<h2 class="panel-title" style="border-radius: 50px;">{{ annonce.titre }}</h2>
+					Description : {{annonce.annonce }} <br/>
+					Prix : {{ annonce.prix }} € <br/>
+					lieux : {{ annonce.lieux }} <br/>
+					<a href="{% url "lire_annonce" annonce.numero%}">Voir cette annonce</a>
+				</div>
+			</div>
 
-	{% for annonce in annonces %}
-		<div class="col-lg-4 col-md-4 col-md-offset-4 col-lg-offset-4">
-			<h2>{{ annonce.titre }}</h2>
-			Description : {{annonce.annonce }} <br/>
-			Prix : {{ annonce.prix }} € <br/>
-			lieux : {{ annonce.lieux }} <br/>
-			<a href="{% url "lire_annonce" annonce.numero%}">Voir cette annonce</a>
+			<div class="col-lg-4 col-md-4 col-md-offset-1 col-lg-offset-1">
+				<div class="panel panel-default" style="text-align: center; border-radius: 50px; border-color:#000000; background-color: #BBDEFB">
+					<h2 class="panel-title" style="border-radius: 50px;">{{ annonce.titre }}</h2>
+					Description : {{annonce.annonce }} <br/>
+					Prix : {{ annonce.prix }} € <br/>
+					lieux : {{ annonce.lieux }} <br/>
+					<a href="{% url "lire_annonce" annonce.numero%}">Voir cette annonce</a>
+				</div>
+			<div>
+			
+			</div>	
+
 		</div>
 {% endfor %}
 

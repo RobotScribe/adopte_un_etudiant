@@ -8,9 +8,10 @@ class InscriptionForm(forms.Form):
     password = forms.CharField(widget=forms.PasswordInput)
     age = forms.IntegerField()
     photo = forms.ImageField(required=False)
-    description = forms.CharField(required=False,label="Description (facultative)")
+    description = forms.CharField(required=False,label="Description (facultative)",widget=forms.Textarea)
     is_student = forms.BooleanField(required=False,label = "cochez si vous êtes étudiant")
     école = forms.CharField(required=False,label = "rentrez votre école si vous êtes étudiant")
+    charte = forms.BooleanField(label ="J'ai pris connaisance de le charte et je l'accepte")
     
     
 class ConnexionForm(forms.Form):

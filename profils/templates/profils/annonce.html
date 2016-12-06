@@ -1,35 +1,60 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-{% load static %}
-
-    <link rel="stylesheet" href="{% static 'style.css' %}" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'style.css' %}" >
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
 	<title> annonce n° {{annonce.numero}}</title>
 </head>
 
 
 <body>
-<div class="background">
-
-<h1> Voici l'annonce proposée par {{annonce.annonceur}} le {{annonce.date|date:"DATE_FORMAT"}} </h1>
-
-
-<p> A {{ annonce.lieux}} </p>
-
-<p> Payé {{annonce.prix}} €</p>
-
-
-
-{% if Bool %}
+<div class="container-fluid">
+<div class="row">
+<nav class="navbar navbar-inverse navbar-fixed-top" style="background-color: #1976D2">
+  <div class="container" style="display:inline-block">  
+    <div id="navbar" style="display: inline-block;">
+        <img src="{% static 'img/logo.png' %}" alt="mon image" width="10%" height="10%">
+    </div>
+    <div class="navbar-header" >
+      <a class="navbar-brand" href="#" style="color :#FFFFFF">Adopte un etudiant</a>
+    </div>
+    <div id="navbar" class="collapse navbar-collapse" >
+      <ul class="nav navbar-nav" style="float:right; margin : -5% 0 0 0" >
+        <li class="active" ><a href="/" style="background-color: #1976D2">Accueil</a></li>
+        <li><a href="/annonces" style="color:#FFFFFF">Voir les annonces</a></li>
+        <li><a href="/proposer_annonce" style="color :#FFFFFF"> Proposez une annonce </a></li>
+        <li><a href="/voir_annonces_perso/a_faire" style="color:#FFFFFF"> Voir vos annonces</a></li>
+        <li><a href="/profil" style="color:#FFFFFF"> Profil</a></li>
+        <li><a href="/deconnexion" style="color:#FFFFFF"> Deconnexion </a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</nav>
+</div>
+<div class="row" style="background-color: #BBDEFB;margin-top: 3%">
+		<div class="col-lg-4 col-lg-offset-4" style="text-align: center">
+		<h1 > 
+		Annonce proposée par {{annonce.annonceur}}  </h1>
+		<div class="row">
+		<p> A {{ annonce.lieux}} </p>
+		<p> Payé {{annonce.prix}} €</p>
+		{% if Bool %}
 	
-	<p> Possibilité de trajet jusuqu'à {{annonce.distance_max}} </p>
+			<p> Possibilité de trajet jusqu'à {{annonce.distance_max}} km </p>
 
-{% endif %}
+		{% endif %}
 
-<p>	Description : {{annonce.annonce}} </p>
+		<p>	Description : {{annonce.annonce}} </p>
 
-<a href="{% url "postuler_annonce" numero%}">Postulez pour cette annonce</a>
-
+		<a href="{% url "postuler_annonce" numero%}">Postulez pour cette annonce</a>
+		</div>
+		</div>
+	</div>
 </div>
 </body>
 </html>
