@@ -13,11 +13,10 @@
 	<title>Inscription</title>
 </head>>
 
-<body>
+<body >
 <div class="container-fluid">
-<div class="row">
-<nav class="navbar navbar-inverse navbar-fixed-top" style="background-color: #1976D2">
-  <div class="container" style="display:inline-block">  
+<nav class="navbar navbar-inverse navbar-fixed-top" style= "background-color: #1976D2">
+  <div class="container-fluid" >  
     <div id="navbar" style="display: inline-block;">
         <img src="{% static 'img/logo.png' %}" alt="mon image" width="10%" height="10%">
     </div>
@@ -25,143 +24,131 @@
       <a class="navbar-brand" href="/" style="color :#FFFFFF">Adopte un etudiant</a>
     </div>
     <div id="navbar" class="collapse navbar-collapse" >
-      <ul class="nav navbar-nav" style="float:right; margin : -5% 0 0 0" >
+      <ul class="nav navbar-nav" style="float:right; margin : -4% 0 0 0" >
         <li class="active" ><a href="/" style="background-color: #1976D2">Accueil</a></li>
         <li><a href="/annonces" style="color:#FFFFFF">Voir les annonces</a></li>
       </ul>
     </div><!--/.nav-collapse -->
   </div>
 </nav>
-</div>
+
 <div class="container-fluid">
-<div style="margin: 2% -3% 0 -3%;background-color: #2196F3">
+<div style="margin: 2% 0% 0% 0%;background-color: #2196F3">
 	<div class="row">
-		<div class="col-lg-8 col-lg-offset-2" style="text-align: center;">
+		<div class="col-lg-8 col-lg-offset-3">
 			<h1>Inscrivez-vous et rejoignez notre communauté !</h1>
 		</div>
-	</div>
-	<br>
+	</div>	
+
 	<fieldset>
+		
 		<div class="row" style="background-color:#BBDBFE" >
 		{% if wrong_email %}
-
-    		<p>Cet adresse email a déjà été utilisée.</p>
-
+	    	<p>Cet adresse email a déjà été utilisée.</p>
 		{% endif %}
 
 		{% if wrong_username %}
-
-    		<p>Ce pseudo a déjà été utilisé.</p>
-
+	    	<p>Ce pseudo a déjà été utilisé.</p>
 		{% endif %}
 
-   
+	   	<form class="form-horizontal " method="post" enctype="multipart/form-data" action=".">
+	       	{% csrf_token %}
+	       	<br>
+	       	<div class ="row">
+	       		<div class="form-group">
+	       			<label for="id_pseudo" class="col-lg-1 col-lg-offset-4" style="text-align: center">Pseudo :</label>
+	       			<input id="id_pseudo" name="pseudo" type="text" size="auto" required />
+	       		</div>
+	       	</div>
 
-   			<form class="form-horizontal " method="post" enctype="multipart/form-data" action=".">
-       			{% csrf_token %}
-       			<br>
-       				<div class ="row">
-       					<div class="form-group">
-       						<label for="id_pseudo" class="col-lg-1 col-lg-offset-4" style="text-align: center">Pseudo :</label>
-       						<input id="id_pseudo" name="pseudo" type="text" required />
-       					</div>
-       				</div>
+	       	<div class ="row">
+	       		<div class="form-group">
+	       			<label for="id_prenom" class="col-lg-1 col-lg-offset-4" style="text-align:center">Prenom :</label>
+	       			<input id="id_prenom" name="prenom" type="text" required />
+	       		</div>
+	       	</div>
 
-       				<div class ="row">
-       					<div class="form-group">
-       						<label for="id_prenom" class="col-lg-1 col-lg-offset-4" style="text-align:center">Prenom :</label>
-       						<input id="id_prenom" name="prenom" type="text" required />
-       					</div>
-       				</div>
+	       	<div class ="row">
+	 			<div class="form-group">
+	       			<label for="id_nom" class="col-lg-1 col-lg-offset-4" style="text-align: center">Nom :</label>
+	       			<input id="id_nom" name="nom" type="text" required />
+	       		</div>
+	        </div>
 
-       				<div class ="row">
-       					<div class="form-group">
-       						<label for="id_nom" class="col-lg-1 col-lg-offset-4" style="text-align: center">Nom :</label>
-       						<input id="id_nom" name="nom" type="text" required />
-       					</div>
-       				</div>
+	       	<div class ="row">
+	       		<div class="form-group">
+	       			<label for="id_email" class="col-lg-1 col-lg-offset-4" style="text-align: center">Email :</label>
+	       			<input id="id_email" name="email" type="email" required />
+	       		</div>
+	       	</div>
 
+	       	<div class ="row">
+	       		<div class="form-group">
+	       			<label for="id_password" class="col-lg-1 col-lg-offset-4" style="text-align: center">Password :</label>
+	       			<input id="id_password" name="password" type="password" required />
+	       		</div>
+	       	</div>
 
-       				<div class ="row">
-       					<div class="form-group">
-       						<label for="id_email" class="col-lg-1 col-lg-offset-4" style="text-align: center">Email :</label>
-       						<input id="id_email" name="email" type="email" required />
-       					</div>
-       				</div>
+	       	<div class ="row">
+	       		<div class="form-group">
+	       			<label for="id_age" class="col-lg-1 col-lg-offset-4" style="text-align: center">Age :</label>
+	       			<input id="id_age" name="age" type="number" required />
+	       		</div>
+	       	</div>
 
+	       	<div class ="row">
+	       		<div class="form-group">
+	       			<label for="id_photo" class="col-lg-1 col-lg-offset-4" style="text-align: center">Photo :</label>
+	       			<input id="id_photo" name="photo" type="file" /></td></tr>
+	       		</div>
+	       	</div>
 
-       				<div class ="row">
-       					<div class="form-group">
-       						<label for="id_password" class="col-lg-1 col-lg-offset-4" style="text-align: center">Password :</label>
-       						<input id="id_password" name="password" type="password" required />
-       					</div>
-       				</div>
+	       	<div class ="row">
+	       		<div class="form-group">
+	       			<label for="id_description" class="col-lg-2 col-lg-offset-3" style="text-align: center">Description (facultative) :</label>
+	       			<textarea cols="20" id="id_description" name="description" rows="1" style="resize: auto"></textarea>
+	       		</div>
+	       	</div>
+	       			
+	       	<div class ="row">
+	       		<div class="form-group">
+	       			<label for="id_is_student" class="col-lg-2 col-lg-offset-3" style="text-align: center">Cochez si vous êtes étudiant :</label>
+	       			<input id="id_is_student" name="is_student" type="checkbox" />
+	       		</div>
+	       	</div>
 
+	       	<div class ="row">
+	       		<div class="form-group">
+	       			<label for="id_école" class="col-lg-3 col-lg-offset-2" style="text-align: center">Rentrez votre école si vous êtes étudiant :</label>
+	       			<input id="id_école" name="école" type="text" />
+	       		</div>
+	       	</div>
 
-       				<div class ="row">
-       					<div class="form-group">
-       						<label for="id_age" class="col-lg-1 col-lg-offset-4" style="text-align: center">Age :</label>
-       						<input id="id_age" name="age" type="number" required />
-       					</div>
-       				</div>
+	       	<div class="row" style="background-color: #F0F0F0">
+		       	<div class ="row">
+		       		<br>
+		       		<div class="form-group">
+		       			<label for="charte" class="col-lg-4 " style="text-align:center "></label>
+		       			<textarea cols="50" id="id_description" name="description" rows="10" style="text-align: center; background-color: #FFFFFF;resize:none; border: solid 1px black" readonly>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		       			</textarea>
+		       		</div>
+		       	</div>
 
+		       	<div class ="row">
+		       		<div class="form-group">
+		       			<label for="id_charte" class="col-lg-4 col-lg-offset-2" style="text-align: right">J&#39;ai pris connaisance de le charte et je l&#39;accepte :</label>
+		       			<input  checked="checked" id="id_charte" name="charte" type="checkbox" required style="align-content:left" />
+		       		</div>
+		       	</div>
 
-       				<div class ="row">
-       					<div class="form-group">
-       						<label for="id_photo" class="col-lg-2 col-lg-offset-3" style="text-align: center">Photo :</label>
-       						<input id="id_photo" name="photo" type="file" /></td></tr>
-       					</div>
-       				</div>
-
-
-       				<div class ="row">
-       					<div class="form-group">
-       						<label for="id_description" class="col-lg-4 col-lg-offset-1" style="text-align: center">Description (facultative) :</label>
-       						<textarea cols="20" id="id_description" name="description" rows="1"></textarea>
-       					</div>
-       				</div>
-
-
-       				<div class ="row">
-       					<div class="form-group">
-       						<label for="id_is_student" class="col-lg-4 col-lg-offset-1" style="text-align: center">Cochez si vous êtes étudiant :</label>
-       						<input class="col-lg-3" checked="checked" id="id_is_student" name="is_student" type="checkbox" />
-       					</div>
-       				</div>
-
-
-       				<div class ="row">
-       					<div class="form-group">
-       						<label for="id_école" class="col-lg-4 col-lg-offset-1" style="text-align: center">Rentrez votre école si vous êtes étudiant :</label>
-       						<input id="id_école" name="école" type="text" />
-       					</div>
-       				</div>
-
-
-       				<div class ="row" style="background-color: #BDBDBD">
-       					<br>
-       					<div class="form-group">
-       						<label for="charte" class="col-lg-3 " style="text-align:center "></label>
-       						<textarea cols="50" id="id_description" name="description" rows="5" style="text-align: center; ba" readonly>
-       							Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-       						</textarea>
-       					</div>
-       				</div>
-
-
-       				<div class ="row">
-       					<div class="form-group">
-       						<label for="id_charte" class="col-lg-4 col-lg-offset-1" style="text-align: center">J&#39;ai pris connaisance de le charte et je l&#39;accepte :</label>
-       						<input class="col-lg-3" checked="checked" id="id_charte" name="charte" type="checkbox" required />
-       					</div>
-       				</div>
-
-                <div class="col-lg-2 col-lg-offset-5" style="text-align: center">
-       				<input class="btn btn-primary" type="submit" style="background-color:#212121"> </input> 
-   				</div>
-    		</form>
-    		</div>
-
+			    <div class ="row">	
+			        <br>
+			        <div class="col-lg-2 col-lg-offset-5" style="text-align: center">
+			       		<input class="btn btn-primary" type="submit" style="background-color:#212121"> </input> 
+			   		</div>
+			   	</div>
+			</div>
+	    	</form>
 		</div>
 	</fieldset>
 </div>
