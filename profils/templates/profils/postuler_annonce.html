@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+{% load static %}
+
+    <link rel="stylesheet" href="{% static 'style.css' %}" />
+	<title> Postulez</title>
+
+</head>
+
+
+<body>
+<div class="background">
+<h1>Postulez pour cette annonce de {{ annonce.annonceur }}</h1>
+
+
+   
+
+<p>
+
+    <form method="post" enctype="multipart/form-data" action="./{{numero}}">
+
+       {% csrf_token %}
+
+       {{ form.as_p }}
+
+       <input type="submit"/>
+
+    </form>
+
+</p>
+
+
+</div>
+</body>
+</html>
