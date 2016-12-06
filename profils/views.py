@@ -340,15 +340,33 @@ def annuler_annonce(request, numero):
                     return redirect('/voir_annonces_perso/en_cours')
                 else:
                     wrong_password = True
-                    return render(request, 'profils/annuler_annonce_etudiant.html', locals())
+                    return render(request, 'profils/annuler_annonce.html', locals())
         else:
             form = DemanderPasswordForm()
-            return render(request, 'profils/annuler_annonce_etudiant.html', locals())
+            return render(request, 'profils/annuler_annonce.html', locals())
     else:
         raise Http404
         
 def accepter_annonce(request, numero):
-    pass
+    annonce = Annonce.objects.get(numero=numero)
+    if annonce.annonceur == request.user.username:
+        wrong_password = False
+        if request.method == "POST":
+            form = DemanderPasswordForm(request.POST)
+            if form.is_valid():
+                password = form.cleaned_data["password"]
+                if authenticate(username=request.user.username, password=password):
+                    annonce.etudiant = annonce.postulant
+                    annonce.save()
+                    return redirect('/voir_annonces_perso/en_cours')
+                else:
+                    wrong_password = True
+                    return render(request, 'profils/accepter_annonce.html', locals())
+        else:
+            form = DemanderPasswordForm()
+            return render(request, 'profils/annuler_annonce.html', locals()) 
+    else:
+        raise Http404
     
 def refuser_annonce(request, numero):
     pass
