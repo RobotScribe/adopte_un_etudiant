@@ -12,9 +12,9 @@
 
 <div class = "background"> 
 
-{% if profil.photo.name != '' %} 
-<img src="{{profil.photo.url }}"/>
-{% endif %}
+<img src="{{profil.photo.url }}" width="10%" heigth="10%"/>
+<a href="/modifier_photo/">Modifier votre photo</a>
+
 <br>Pseudo : {{ profil.user.username }}</br>
 <br>Nom : {{ profil.user.last_name }}</br>
 <br>Prénom : {{ profil.user.first_name }}</br>

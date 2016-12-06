@@ -3,7 +3,6 @@ from . import views
 
 urlpatterns = [
     url(r'^$', views.home, name= 'home'),
-    url(r'^home/$', views.home, name='home'),
     url(r'^inscription/$', views.inscription),
     url(r'^connexion/$', views.connexion, name = 'connexion'),
     url(r'^deconnexion/$', views.deconnexion, name = 'deconnexion'),
@@ -14,6 +13,7 @@ urlpatterns = [
     url(r'^test/?$', views.test, name = 'test'),
     url(r'^profil/?$', views.profil, name = 'profil'),
     url(r'^modifier_profil/?$', views.modifier_profil),
+    url(r'^modifier_photo/?$', views.modifier_photo),
     url(r'^voir_annonces_perso/(?P<etat>\w+$)', views.voir_annonces_perso),
     url(r'^annonce_perso/(?P<numero>\d+$)',views.annonce_perso, name= 'lire_annonce_perso'),
     url(r'^modifier_annonce/(?P<numero>\d+$)',views.modifier_annonce, name= 'modifier_annonce'),
