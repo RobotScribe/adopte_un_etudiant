@@ -21,10 +21,12 @@ Les attributs de la classe User sont :
 class Profil(models.Model):
     user = models.OneToOneField(User)
     age = models.IntegerField()
-    photo = models.ImageField(upload_to="photos/", null=True)
+    photo = models.ImageField(upload_to="photos/")
     is_student = models.BooleanField()
     ecole = models.CharField(null=True, max_length=100)
     description = models.TextField(null=True)
+    #"homme" ou "femme"
+    sexe = models.CharField(max_length=10)
     
     def __str__(self):
         return self.user.username

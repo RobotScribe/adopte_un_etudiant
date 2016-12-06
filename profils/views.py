@@ -18,14 +18,12 @@ def inscription(request):
     
     if request.method == "POST":
         form = InscriptionForm(request.POST, request.FILES)
-        print("formulaire recu")
         if form.is_valid():
             print("formulaire valide")
             emailForm = form.cleaned_data["email"]
             pseudoForm = form.cleaned_data["pseudo"]
             if (len(User.objects.filter(email = emailForm)) == 0) and (len(User.objects.filter(username = pseudoForm))) == 0:
                 print("test ok")
-                print(form)
                 profil = Profil()
                 user = User()
                 user.username = form.cleaned_data["pseudo"]
@@ -41,7 +39,12 @@ def inscription(request):
                 profil.user = user
                 profil.age = form.cleaned_data["age"]           
                 profil.photo = form.cleaned_data["photo"]
-                print(form.cleaned_data["is_student"])
+                profil.sexe = form.cleaned_data["sexe"]
+                if profil.photo.name == '':
+                    if profil.sexe == "Homme":
+                        profil.photo = 'photos/photo_homme.svg'
+                    else:
+                        profil.photo = 'photos/photo_femme.svg'                    
                 profil.is_student = form.cleaned_data["is_student"]
                 profil.description = form.cleaned_data["description"]
                 if profil.is_student:
@@ -60,8 +63,8 @@ def inscription(request):
                 
     else:
         form = InscriptionForm()
-    print("envoi formulaire blanc")
-    return render(request, 'profils/inscription.html', locals())
+        print("envoi formulaire blanc")
+        return render(request, 'profils/inscription.html', locals())
     
     
 def connexion(request):
@@ -103,8 +106,17 @@ def list_annonces(request):
     nb_r_annonce = len(annonces) % 2  
     return render(request,'profils/list_annonces.html',locals())
 
-def annonce(request,numero) :
+def annonce(request,numero):
+    pseudo = request.user.username
     annonce = Annonce.objects.get(numero=numero)
+    user_annonceur = User.objects.get(username=annonce.annonceur)
+    profil_annonceur = Profil.objects.get(user=user_annonceur)
+    if annonce.etat != "a_faire":
+        if ((pseudo==annonce.annonceur) or (pseudo==annonce.postulant) or (pseudo==annonce.etudiant)):
+            Bool = annonce.distance_max != 0
+            return render(request,'profils/annonce.html',locals())
+        else:
+            raise Http404
     Bool = annonce.distance_max != 0
     return render(request,'profils/annonce.html',locals())
 
@@ -113,6 +125,9 @@ def annonce(request,numero) :
 def annonce_perso(request,numero):
     annonce = Annonce.objects.get(numero=numero)
     user_annonceur = User.objects.get(username=annonce.annonceur)
+    profil_annonceur = Profil.objects.get(user=user_annonceur)
+    if annonce.etudiant != '':
+        user_etudiant = User.objects.get(username=annonce.etudiant)
     if ((annonce.annonceur == request.user.username) or(annonce.postulant == request.user.username)):
         Bool = annonce.distance_max != 0
         return render(request,'profils/annonce_perso.html',locals())
@@ -168,51 +183,43 @@ def supprimer_annonce(request,numero):
     else:
         raise Http404
         
-    
+        
+@login_required(login_url = '/connexion/')    
 def proposer_annonce(request):
-    if request.user.is_authenticated:
-        print('authentification réussie')
-
-        if request.method == "POST":
-            form = AnnonceForm(request.POST)
-            print("annonce reçue")
-            if form.is_valid():
-                annonce = Annonce()
-                print("formulaire valide")
-                annonce.titre=form.cleaned_data["titre"]
-                print(annonce.titre)
-                #annonce.boulot=form.cleaned_data["boulot"]
-                annonce.annonce=form.cleaned_data["annonce"]
-                print(annonce.annonce)
-                annonce.prix=form.cleaned_data["prix"]
-                annonce.lieux = form.cleaned_data["lieux"]
-                annonce.distance_max=form.cleaned_data["distance_max"]
-                annonce.etat = "a_faire"
-                print(request.user)
-                annonce.annonceur = request.user.username
+    if request.method == "POST":
+        form = AnnonceForm(request.POST)
+        print("annonce reçue")
+        if form.is_valid():
+            annonce = Annonce()
+            annonce.titre=form.cleaned_data["titre"]
+            #annonce.boulot=form.cleaned_data["boulot"]
+            annonce.annonce=form.cleaned_data["annonce"]
+            annonce.prix=form.cleaned_data["prix"]
+            annonce.lieux = form.cleaned_data["lieux"]
+            annonce.distance_max=form.cleaned_data["distance_max"]
+            annonce.etat = "a_faire"
+            annonce.annonceur = request.user.username
                 
-                list_annonces = Annonce.objects.all()# a changer #
-                list_num = []
-                for annonce_deja_creee in list_annonces:
-                    list_num.append(annonce_deja_creee.numero)
+            list_annonces = Annonce.objects.all()# a changer #
+            list_num = []
+            for annonce_deja_creee in list_annonces:
+                list_num.append(annonce_deja_creee.numero)
                 
-                if len(list_num) == 0:
+            if len(list_num) == 0:
                     annonce.numero = 1
-                else:
-                    annonce.numero = max(list_num) + 1
+            else:
+                annonce.numero = max(list_num) + 1
                 
-                annonce.save()
-                return render(request, 'profils/annonce_reussie.html', locals())
+            annonce.save()
+            return render(request, 'profils/annonce_reussie.html', locals())
                       
-        else:
+    else:
             
-            form = AnnonceForm()
-            print('creation du formulaire')
+        form = AnnonceForm()
+        print('creation du formulaire')
 
-        return render(request, 'profils/proposer_annonce.html', locals())
-    
-    else :
-        return redirect(connexion)
+    return render(request, 'profils/proposer_annonce.html', locals())
+
         
         
 @login_required(login_url = '/connexion/')           
@@ -248,71 +255,89 @@ def profil(request):
     else:
         return redirect(connexion)
         
+
+@login_required(login_url = '/connexion/')         
 def modifier_profil(request):
-    print("ok0")
-    if request.user.is_authenticated:
-        profil = Profil.objects.get(user = request.user)
-        wrong_username = False
-        wrong_password = False
+    profil = Profil.objects.get(user = request.user)
+    wrong_username = False
+    wrong_password = False
         
-        print("ok1")
-        
-        if request.method == "POST":
-            form = ModifierProfilForm(request.POST)
+    if request.method == "POST":
+        form = ModifierProfilForm(request.POST)
             
-            if form.is_valid():
-                password = form.cleaned_data["password"]
-                if authenticate(username=request.user.username, password=password):                
-                    new_username = form.cleaned_data["pseudo"]
-                    if (len(User.objects.filter(username = new_username)) == 0) or (new_username == request.user.username):
-                        user = profil.user
-                        user.username = new_username
-                        new_password = form.cleaned_data["new_password"]
-                        user.set_password(new_password)
-                        user.save() 
-                        profil.user = user
-                        profil.photo = form.cleaned_data["photo"]
-                        profil.description = form.cleaned_data["description"]
-                        profil.is_student = form.cleaned_data["is_student"]
-                        if profil.is_student:
-                            profil.ecole = form.cleaned_data["école"]
+        if form.is_valid():
+            password = form.cleaned_data["password"]
+            if authenticate(username=request.user.username, password=password):                
+                new_username = form.cleaned_data["pseudo"]
+                if (len(User.objects.filter(username = new_username)) == 0) or (new_username == request.user.username):
+                    user = profil.user
+                    user.username = new_username
+                    new_password = form.cleaned_data["new_password"]
+                    user.set_password(new_password)
+                    user.save() 
+                    profil.user = user
+                    profil.description = form.cleaned_data["description"]
+                    profil.is_student = form.cleaned_data["is_student"]
+                    if profil.is_student:
+                        profil.ecole = form.cleaned_data["école"]
                             
                            
-                        profil.save()
+                    profil.save()
                         
-                        authenticate(username=user.username, password=new_password)
-                        login(request, user)
+                    authenticate(username=user.username, password=new_password)
+                    login(request, user)
                         
                         
-                        return redirect('/profil/')
+                    return redirect('/profil/')
                         
-                    else:
-                        wrong_username = True
-                        return render(request, 'profils/modifier_profil.html', locals())
                 else:
-                    wrong_password = True
+                    wrong_username = True
                     return render(request, 'profils/modifier_profil.html', locals())
-        else:
-            form = ModifierProfilForm()
-            return render(request, 'profils/modifier_profil.html', locals())
-        
+            else:
+                wrong_password = True
+                return render(request, 'profils/modifier_profil.html', locals())
     else:
-        return redirect(connexion)
-        
-        
+        form = ModifierProfilForm()
+        return render(request, 'profils/modifier_profil.html', locals())
 
-def voir_annonces_afaire(request, etat):
-    print("ok1")
+
+@login_required(login_url = '/connexion/')         
+def modifier_photo(request):
+    profil = Profil.objects.get(user = request.user)
+    wrong_password = False
+    print("ko0")
+        
+    if request.method == "POST":
+        form = ModifierPhotoForm(request.POST)
+        print("post")
+        print(form.errors)
+        print(form.non_field_errors)
+        if form.is_valid():
+            print("formvalid")
+            password = form.cleaned_data["password"]
+            print("ok1")
+            if authenticate(username=request.user.username, password=password):  
+                profil.photo = form.cleaned_data["photo"] 
+                profil.save()    
+                return redirect('/profil/')
+            wrong_password = True
+            return render(request, 'profils/modifier_photo.html', locals())
+        else:
+            print("pasok")
+    else:
+        form = ModifierPhotoForm()
+        return render(request, 'profils/modifier_photo.html', locals())
+        
+@login_required(login_url = '/connexion/') 
+def voir_annonces_perso(request, etat):
     profil = Profil.objects.get(user = request.user)
     pseudo = request.user.username
-    print(pseudo)
     if etat == "a_faire":
         annonces = Annonce.objects.filter(etat="a_faire", annonceur = pseudo)
         return render(request,'profils/list_annonces_perso.html',locals())
     if etat == "en_cours":
-        print("ok2encours")
         annonces_particulier = Annonce.objects.filter(etat="en_cours", annonceur = pseudo)
-        annonces_postulees = Annonce.objects.filter(etat="en_cours", postulant = pseudo)
+        annonces_postulees = Annonce.objects.filter(etat="en_cours", postulant = pseudo).exclude(etudiant = pseudo)
         print(len(annonces_postulees))
         annonces_etudiant = Annonce.objects.filter(etat="en_cours", etudiant = pseudo)      
         return render(request,'profils/list_annonces_perso.html',locals())
@@ -336,6 +361,7 @@ def annuler_annonce(request, numero):
                     annonce.postulant = None
                     annonce.etudiant = ''
                     annonce.etat = "a_faire"
+                    annonce.message_postulant = None
                     annonce.save()
                     return redirect('/voir_annonces_perso/en_cours')
                 else:
@@ -346,7 +372,8 @@ def annuler_annonce(request, numero):
             return render(request, 'profils/annuler_annonce.html', locals())
     else:
         raise Http404
-        
+
+@login_required(login_url = '/connexion/')        
 def accepter_annonce(request, numero):
     annonce = Annonce.objects.get(numero=numero)
     if annonce.annonceur == request.user.username:
@@ -369,10 +396,48 @@ def accepter_annonce(request, numero):
         raise Http404
     
 def refuser_annonce(request, numero):
-    pass
+    annonce = Annonce.objects.get(numero=numero)
+    if annonce.annonceur == request.user.username:
+        wrong_password = False
+        if request.method == "POST":
+            form = DemanderPasswordForm(request.POST)
+            if form.is_valid():
+                password = form.cleaned_data["password"]
+                if authenticate(username=request.user.username, password=password):
+                    annonce.postulant = None
+                    annonce.message_postulant = None
+                    annonce.save()
+                    return redirect('/voir_annonces_perso/en_cours')
+                else:
+                    wrong_password = True
+                    return render(request, 'profils/accepter_annonce.html', locals())
+        else:
+            form = DemanderPasswordForm()
+            return render(request, 'profils/annuler_annonce.html', locals()) 
+    else:
+        raise Http404
+        
     
 def annonce_effectuee(request, numero):
-    pass
+    annonce = Annonce.objects.get(numero=numero)
+    if annonce.annonceur == request.user.username:
+        wrong_password = False
+        if request.method == "POST":
+            form = DemanderPasswordForm(request.POST)
+            if form.is_valid():
+                password = form.cleaned_data["password"]
+                if authenticate(username=request.user.username, password=password):
+                    annonce.etat = "fait"
+                    annonce.save()
+                    return redirect('/voir_annonces_perso/en_cours')
+                else:
+                    wrong_password = True
+                    return render(request, 'profils/accepter_annonce.html', locals())
+        else:
+            form = DemanderPasswordForm()
+            return render(request, 'profils/annuler_annonce.html', locals()) 
+    else:
+        raise Http404
         
 
 

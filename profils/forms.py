@@ -11,6 +11,8 @@ class InscriptionForm(forms.Form):
     description = forms.CharField(required=False,label="Description (facultative)",widget=forms.Textarea)
     is_student = forms.BooleanField(required=False,label = "cochez si vous êtes étudiant")
     école = forms.CharField(required=False,label = "rentrez votre école si vous êtes étudiant")
+    CHOICES = ('Homme','Femme')
+    sexe = forms.ChoiceField(widget=forms.RadioSelect, choices=CHOICES)
     charte = forms.BooleanField(label ="J'ai pris connaisance de le charte et je l'accepte")
     
     
@@ -35,11 +37,15 @@ class ModifierProfilForm(forms.Form):
     password = forms.CharField(widget=forms.PasswordInput, label = "Mot de passe actuel")
     pseudo = forms.CharField(label = "Nouveau pseudo")
     new_password = forms.CharField(widget=forms.PasswordInput, label="Rentrez votre nouveau mot de passe")
-    photo = forms.ImageField(required=False, label = "Nouvelle photo (facultative)")
     description = forms.CharField(required=False,label="Nouvelle description (facultative)")
     is_student = forms.BooleanField(required=False,label = "cochez si vous êtes étudiant")
     école = forms.CharField(required=False,label = "rentrez votre école si vous êtes étudiant")
     
+class ModifierPhotoForm(forms.Form):
+    password = forms.CharField(widget=forms.PasswordInput, label = "Mot de passe actuel")    
+    photo = forms.ImageField(label = "Nouvelle photo")
+    
+
 
 class ModifierAnnonceForm(forms.Form):
     password = forms.CharField(widget=forms.PasswordInput, label = "Mot de passe actuel")
