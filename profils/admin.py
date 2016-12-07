@@ -3,7 +3,7 @@ from profils.models import Profil, Annonce
 
 
 class ProfilAdmin(admin.ModelAdmin):
-    list_display = ('user', 'age', 'is_student')
+    list_display = ('user', 'age', 'is_student', 'sexe')
     list_filter = ('is_student',) 
     search_fields = ('user',)
     

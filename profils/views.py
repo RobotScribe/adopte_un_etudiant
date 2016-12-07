@@ -15,6 +15,7 @@ def home(request):
 def inscription(request):
     wrong_email = False
     wrong_username = False
+    wrong_ecole = False
     
     if request.method == "POST":
         form = InscriptionForm(request.POST, request.FILES)
@@ -47,7 +48,11 @@ def inscription(request):
                         profil.photo = 'photos/photo_femme.svg'                    
                 profil.is_student = form.cleaned_data["is_student"]
                 profil.description = form.cleaned_data["description"]
+                print(profil.description)
                 if profil.is_student:
+                    if form.cleaned_data["école"] == '':
+                        wrong_ecole = True
+                        return render(request, 'profils/inscription.html', locals())
                     profil.ecole = form.cleaned_data["école"]
                 profil.save()
                 
@@ -264,6 +269,7 @@ def profil(request):
 @login_required(login_url = '/connexion/')         
 def modifier_profil(request):
     profil = Profil.objects.get(user = request.user)
+    last_username = request.user.username
     wrong_username = False
     wrong_password = False
         
@@ -288,6 +294,16 @@ def modifier_profil(request):
                             
                            
                     profil.save()
+                    
+                    annonces = Annonce.objects.all()
+                    for annonce in annonces:
+                        if annonce.annonceur == last_username:
+                            annonce.annonceur = new_username
+                        if annonce.etudiant == last_username:
+                            annonce.etudiant = new_username
+                        if annonce.postulant == last_username:
+                            annonce.postulant = new_username
+                        annonce.save()
                         
                     authenticate(username=user.username, password=new_password)
                     login(request, user)
@@ -310,30 +326,44 @@ def modifier_profil(request):
 def modifier_photo(request):
     profil = Profil.objects.get(user = request.user)
     wrong_password = False
-    print("ko0")
         
     if request.method == "POST":
         form = ModifierPhotoForm(request.POST, request.FILES)
         if form.is_valid():
-            print("formvalid") 
-            print(request.POST.get('photo'))
             password = form.cleaned_data["password"]
-            print("ok1")
             if authenticate(username=request.user.username, password=password):
-                profil.photo = form.cleaned_data["photo"] 
-                print("namephoto = ",profil.photo.name)
-                if ((profil.photo.name == '') or (profil.photo.name == None)):
-                    profil.photo = 'photos/photo_homme.svg'
-                print("namephoto = ",profil.photo.name)
+                profil.photo = form.cleaned_data["photo"]
                 profil.save()    
                 return redirect('/profil/')
             wrong_password = True
             return render(request, 'profils/modifier_photo.html', locals())
-        else:
-            print("pasok")
     else:
         form = ModifierPhotoForm()
         return render(request, 'profils/modifier_photo.html', locals())
+        
+@login_required(login_url = '/connexion/')         
+def supprimer_photo(request):
+    profil = Profil.objects.get(user = request.user)
+    wrong_password = False
+        
+    if request.method == "POST":
+        form = DemanderPasswordForm(request.POST)
+        if form.is_valid():
+            password = form.cleaned_data["password"]
+            if authenticate(username=request.user.username, password=password):
+                if ((profil.sexe == "Homme")or(profil.sexe == "homme")):
+                    profil.photo = 'photos/photo_homme.svg'
+                else:
+                    profil.photo = 'photos/photo_femme.svg'
+                profil.save()    
+                return redirect('/profil/')
+            wrong_password = True
+            return render(request, 'profils/supprimer_photo.html', locals())
+        else:
+            print("pasok")
+    else:
+        form = DemanderPasswordForm()
+        return render(request, 'profils/supprimer_photo.html', locals())
         
 @login_required(login_url = '/connexion/') 
 def voir_annonces_perso(request, etat):
