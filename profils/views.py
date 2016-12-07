@@ -19,7 +19,7 @@ def inscription(request):
     if request.method == "POST":
         form = InscriptionForm(request.POST, request.FILES)
         if form.is_valid():
-            print("formulaire valide")
+            print(form)
             emailForm = form.cleaned_data["email"]
             pseudoForm = form.cleaned_data["pseudo"]
             if (len(User.objects.filter(email = emailForm)) == 0) and (len(User.objects.filter(username = pseudoForm))) == 0:
@@ -103,7 +103,12 @@ def deconnexion(request):
 def list_annonces(request):
     annonces = Annonce.objects.filter(etat="a_faire")
     nb_q_annonce = len(annonces) // 2
-    nb_r_annonce = len(annonces) % 2  
+    nb_r_annonce = 0  
+    nb_annonce = []
+    for annonce in annonces :    
+        nb_annonce.append(nb_r_annonce)
+        nb_r_annonce= nb_r_annonce+1
+    nb_r_annonce = len(annonces) % 2 
     return render(request,'profils/list_annonces.html',locals())
 
 def annonce(request,numero):

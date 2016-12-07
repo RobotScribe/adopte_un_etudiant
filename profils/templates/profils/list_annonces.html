@@ -2,7 +2,7 @@
 <html lang="fr">
 
 <head>
-<meta charset="utf-8">
+	<meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     {% load static %}
@@ -16,10 +16,8 @@
 
 <body>
 
-<!-- header -->
-<div class="row" style="height: 50px">
-<nav class="navbar navbar-inverse navbar-fixed-top" style="background-color: #1976D2">
-  <div class="container" style="display:inline-block">  
+<nav class="navbar navbar-inverse navbar-fixed-top" style= "background-color: #1976D2">
+  <div class="container-fluid" >  
     <div id="navbar" style="display: inline-block;">
         <img src="{% static 'img/logo.png' %}" alt="mon image" width="10%" height="10%">
     </div>
@@ -27,21 +25,29 @@
       <a class="navbar-brand" href="/" style="color :#FFFFFF">Adopte un etudiant</a>
     </div>
     <div id="navbar" class="collapse navbar-collapse" >
-      <ul class="nav navbar-nav" style="float:right; margin : -5% 0 0 0" >
-        <li class="active" ><a href="/" style="background-color: #1976D2">Accueil</a></li>
-        <li><a href="/annonces" style="color:#FFFFFF">Voir les annonces</a></li>
-        <li><a href="/proposer_annonce" style="color :#FFFFFF"> Proposez une annonce </a></li>
-        <li><a href="/voir_annonces_perso/a_faire" style="color:#FFFFFF"> Voir vos annonces</a></li>
-        <li><a href="/profil" style="color:#FFFFFF"> Profil</a></li>
-        <li><a href="/deconnexion" style="color:#FFFFFF"> Deconnexion </a></li>
-      </ul>
+    <ul class="nav navbar-nav" style=" margin : -4% 0 0 16%" >
+        <li class="active" ><a href="/" style="background-color: #1976D2"><span class="glyphicon glyphicon-home"></span> Accueil</a></li>
+        <li><a href="/annonces" style="color:#FFFFFF"><span class="glyphicon glyphicon-tags"></span> Voir les annonces</a></li>
+        <li><a href="/proposer_annonce" style="color:#FFFFFF"><span class="glyphicon glyphicon-cloud-upload"></span> Proposer une annonce</a></li>
+        <li><a href="/voir_annonces_perso/a_faire" style="color:#FFFFFF"><span class="glyphicon glyphicon-eye-open"></span> Voir vos annonces</a></li>
+        <li><a href="/profil" style="color:#FFFFFF"><span class="glyphicon glyphicon-user"></span> Profil</a></li>
+    </ul>
+
+    <ul class="nav navbar-nav" style=" float:right;margin :-3% 15% 0 16%">
+    	<li style="color:#FFFFFF">Bienvenue {{ request.user.username }} </li>
+    </ul>
+
+
+    <ul class="nav navbar-nav navbar-right" style=" float:right; margin : -4% 0 0 16%">
+        <li><a href="/deconnexion" style="color:#FFFFFF"><span class="glyphicon glyphicon-log-out"></span> Deconnexion </a></li>
+    </ul>
     </div><!--/.nav-collapse -->
   </div>
 </nav>
-</div>
 
 <!-- affichage des annonces -->
-<div class="row" > 
+
+<div class="row" style="margin:3% 0 0 0"> 
 
 	<div class="row" style="background-color: #2196F3; text-align: center;">
 		<div class="col-lg-4 col-lg-offset-4">
@@ -50,34 +56,35 @@
 	</div>
 	<br>
 	{% for annonce in annonces %}	
-		<div class="row">
-			<div class="col-lg-4 col-md-4 col-md-offset-1 col-lg-offset-1">
-				<div class="panel panel-default" style="text-align: center; border-radius: 50px; border-color:#000000; background-color: #BBDEFB">
-					<h2 class="panel-title" style="border-radius: 50px;">{{ annonce.titre }}</h2>
-					Description : {{annonce.annonce }} <br/>
-					Prix : {{ annonce.prix }} € <br/>
-					lieux : {{ annonce.lieux }} <br/>
-					<a href="{% url "lire_annonce" annonce.numero%}">Voir cette annonce</a>
+		<br{% cycle 1 0 as col %}/>
+			{% if col %}
+				<div class="row" style ="min-height:500px">
+					<div class="col-lg-4 col-md-4 col-md-offset-1 col-lg-offset-1">
+						<div class="panel panel-default" style="height: 150px; text-align: center; border-radius: 100px; border-color:#000000; background-color: #BBDEFB">
+							<br/>
+							<h2 class="panel-title" style="border-radius: 50px;">{{ annonce.titre }}</h2>
+							Description : {{annonce.annonce|truncatechars:40 }} <br/>
+							Prix : {{ annonce.prix }} € <br/>
+							lieux : {{ annonce.lieux }} <br/> 
+							<a href="{% url "lire_annonce" annonce.numero%}">Voir cette annonce</a><br/>
+						</div>
+					</div>
+			{% else %}
+				<div class="col-lg-4 col-md-4 col-md-offset-2 col-lg-offset-2">
+					<div class="panel panel-default" style="height:150px;text-align: center; border-radius: 100px; border-color:#000000; background-color: #BBDEFB">
+						<br/>
+						<h2 class="panel-title" style="border-radius: 50px;">{{ annonce.titre }}</h2>
+						Description : {{annonce.annonce|truncatechars:40 }} <br/>
+						Prix : {{ annonce.prix }} € <br/>
+						lieux : {{ annonce.lieux }} <br/>
+						<a href="{% url "lire_annonce" annonce.numero%}">Voir cette annonce</a>
+						<br/>
+					</div>
 				</div>
-			</div>
-
-			<div class="col-lg-4 col-md-4 col-md-offset-1 col-lg-offset-1"">
-				<div class="panel panel-default" style="text-align: center; border-radius: 50px; border-color:#000000; background-color: #BBDEFB">
-					<h2 class="panel-title" style="border-radius: 50px;">{{ annonce.titre }}</h2>
-					Description : {{annonce.annonce }} <br/>
-					Prix : {{ annonce.prix }} € <br/>
-					lieux : {{ annonce.lieux }} <br/>
-					<a href="{% url "lire_annonce" annonce.numero%}">Voir cette annonce</a>
-				</div>
-			</div>
+			{% endif %}
+	{% endfor %}
 		</div>
-{% endfor %}
-toto
-{{ annonces.1.prix}}
-totot
-</div>
-<div class="row">
-{{ annonces.7 }}
+	}
 </div>
 </body>
 </html>
