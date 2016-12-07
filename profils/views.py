@@ -40,7 +40,7 @@ def inscription(request):
                 profil.age = form.cleaned_data["age"]           
                 profil.photo = form.cleaned_data["photo"]
                 profil.sexe = form.cleaned_data["sexe"]
-                if profil.photo.name == '':
+                if ((profil.photo.name == '') or (profil.photo.name == None)):
                     if profil.sexe == "Homme":
                         profil.photo = 'photos/photo_homme.svg'
                     else:
@@ -308,16 +308,18 @@ def modifier_photo(request):
     print("ko0")
         
     if request.method == "POST":
-        form = ModifierPhotoForm(request.POST)
-        print("post")
-        print(form.errors)
-        print(form.non_field_errors)
+        form = ModifierPhotoForm(request.POST, request.FILES)
         if form.is_valid():
-            print("formvalid")
+            print("formvalid") 
+            print(request.POST.get('photo'))
             password = form.cleaned_data["password"]
             print("ok1")
-            if authenticate(username=request.user.username, password=password):  
+            if authenticate(username=request.user.username, password=password):
                 profil.photo = form.cleaned_data["photo"] 
+                print("namephoto = ",profil.photo.name)
+                if ((profil.photo.name == '') or (profil.photo.name == None)):
+                    profil.photo = 'photos/photo_homme.svg'
+                print("namephoto = ",profil.photo.name)
                 profil.save()    
                 return redirect('/profil/')
             wrong_password = True

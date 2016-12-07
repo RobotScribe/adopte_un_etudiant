@@ -1,4 +1,22 @@
 from django import forms
+"""
+BIRTH_YEAR_CHOICES = ('1980', '1981', '1982')
+FAVORITE_COLORS_CHOICES = (
+    ('blue', 'Blue'),
+    ('green', 'Green'),
+    ('black', 'Black'),
+)
+
+class InscriptionForm(forms.Form):
+    birth_year = forms.DateField(widget=forms.SelectDateWidget(years=BIRTH_YEAR_CHOICES))
+    favorite_colors = forms.MultipleChoiceField(
+        required=False,
+        widget=forms.CheckboxSelectMultiple,
+        choices=FAVORITE_COLORS_CHOICES,
+    )
+
+"""
+SEXE_CHOICES = (('homme','Homme'),('femme','Femme'))
 
 class InscriptionForm(forms.Form):
     pseudo = forms.CharField()
@@ -11,9 +29,9 @@ class InscriptionForm(forms.Form):
     description = forms.CharField(required=False,label="Description (facultative)",widget=forms.Textarea)
     is_student = forms.BooleanField(required=False,label = "cochez si vous êtes étudiant")
     école = forms.CharField(required=False,label = "rentrez votre école si vous êtes étudiant")
-    CHOICES = ('Homme','Femme')
-    sexe = forms.ChoiceField(widget=forms.RadioSelect, choices=CHOICES)
+    sexe = forms.ChoiceField(choices=SEXE_CHOICES)
     charte = forms.BooleanField(label ="J'ai pris connaisance de le charte et je l'accepte")
+    
     
     
 class ConnexionForm(forms.Form):
@@ -42,8 +60,10 @@ class ModifierProfilForm(forms.Form):
     école = forms.CharField(required=False,label = "rentrez votre école si vous êtes étudiant")
     
 class ModifierPhotoForm(forms.Form):
-    password = forms.CharField(widget=forms.PasswordInput, label = "Mot de passe actuel")    
-    photo = forms.ImageField(label = "Nouvelle photo")
+    password = forms.CharField(widget=forms.PasswordInput)
+    photo = forms.ImageField(required=False)
+    #password = forms.CharField(widget=forms.PasswordInput, label = "Mot de passe actuel")    
+    #photo = forms.ImageField(label = "Nouvelle photo")
     
 
 

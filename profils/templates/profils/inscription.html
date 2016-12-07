@@ -1,3 +1,4 @@
+<!-- 
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -28,7 +29,7 @@
         <li class="active" ><a href="/" style="background-color: #1976D2">Accueil</a></li>
         <li><a href="/annonces" style="color:#FFFFFF">Voir les annonces</a></li>
       </ul>
-    </div><!--/.nav-collapse -->
+    </div><!--/.nav-collapse
   </div>
 </nav>
 
@@ -155,4 +156,39 @@
 </div>
 </body>
 </html>
+
+-->
+
+<h1>Inscription</h1>
+
+
+{% if wrong_email %}
+
+    <p>Cet adresse email a déjà été utilisée.</p>
+
+{% endif %}
+
+{% if wrong_username %}
+
+    <p>Ce pseudo a déjà été utilisé.</p>
+
+{% endif %}
+
+   
+
+<p>
+
+    <form method="post" enctype="multipart/form-data" action=".">
+
+       {% csrf_token %}
+
+      
+       {{ form.as_p }}
+
+       <input type="submit"/>
+
+    </form>
+
+</p>
+
 
