@@ -17,6 +17,7 @@ class InscriptionForm(forms.Form):
 
 """
 SEXE_CHOICES = (('homme','Homme'),('femme','Femme'))
+NOTE_CHOICES = (('A','A'),('B','B'),('C','C'),('D','D'),('E','E'),('F','F'))
 
 class InscriptionForm(forms.Form):
     pseudo = forms.CharField()
@@ -77,6 +78,11 @@ class ModifierAnnonceForm(forms.Form):
     
 class DemanderPasswordForm(forms.Form):
     password = forms.CharField(widget=forms.PasswordInput, label = "Mot de passe actuel")
+    
+class CommentaireForm(forms.Form):
+    Note = forms.ChoiceField(choices=NOTE_CHOICES)
+    Commentaire = forms.CharField(required=False)
+    
     
 
 

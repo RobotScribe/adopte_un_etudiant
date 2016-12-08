@@ -46,6 +46,7 @@
             <a href="{% url "annuler_annonce" numero%}">Annuler votre demande de réservation</a></br>
         {% else %}
             <p>Vous avez bien effectué cette annonce</p>
+            <a href="{% url "donner_avis" annonce.annonceur annonce.etudiant %}">Donnez lui un avis</a></br>
         {% endif %}
     {% elif annonce.etudiant == '' %}
         
