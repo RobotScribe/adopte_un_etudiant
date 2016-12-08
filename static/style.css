@@ -54,6 +54,10 @@ background-size: cover;
     -o-background-size: cover;
 }
 
+.element1 {
+  font-size: 250%
+}
+
 
 /* CUSTOMIZE THE NAVBAR
 -------------------------------------------------- */

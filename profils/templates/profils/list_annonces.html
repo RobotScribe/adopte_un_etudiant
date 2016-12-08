@@ -28,19 +28,27 @@
     <ul class="nav navbar-nav" style=" margin : -4% 0 0 16%" >
         <li class="active" ><a href="/" style="background-color: #1976D2"><span class="glyphicon glyphicon-home"></span> Accueil</a></li>
         <li><a href="/annonces" style="color:#FFFFFF"><span class="glyphicon glyphicon-tags"></span> Voir les annonces</a></li>
-        <li><a href="/proposer_annonce" style="color:#FFFFFF"><span class="glyphicon glyphicon-cloud-upload"></span> Proposer une annonce</a></li>
-        <li><a href="/voir_annonces_perso/a_faire" style="color:#FFFFFF"><span class="glyphicon glyphicon-eye-open"></span> Voir vos annonces</a></li>
-        <li><a href="/profil" style="color:#FFFFFF"><span class="glyphicon glyphicon-user"></span> Profil</a></li>
+        {% if request.user.is_authenticated%}
+	        <li><a href="/proposer_annonce" style="color:#FFFFFF"><span class="glyphicon glyphicon-cloud-upload"></span> Proposer une annonce</a></li>
+	        <li><a href="/voir_annonces_perso/a_faire" style="color:#FFFFFF"><span class="glyphicon glyphicon-eye-open"></span> Voir vos annonces</a></li>
+	        <li><a href="/profil" style="color:#FFFFFF"><span class="glyphicon glyphicon-user"></span> Profil</a></li>
+	    {% else %}
+	    	<li><a href="/inscription" style="color:#FFFFFF"><span class="glyphicon glyphicon-pencil"></span> Inscription</a></li>
+		    <li><a href="/connexion" style="color:#FFFFFF"><span class="glyphicon glyphicon-log-out"></span>  Connexion</a></li>
+	    {% endif %}
     </ul>
 
-    <ul class="nav navbar-nav" style=" float:right;margin :-3% 15% 0 16%">
-    	<li style="color:#FFFFFF">Bienvenue {{ request.user.username }} </li>
-    </ul>
+    {% if request.user.is_authenticated %}
+	    <ul class="nav navbar-nav" style=" float:right;margin :-3% 15% 0 16%">
+	    	<li style="color:#FFFFFF">Bienvenue {{ request.user.username }} </li>
+	    </ul>
+	{% endif %}
 
-
-    <ul class="nav navbar-nav navbar-right" style=" float:right; margin : -4% 0 0 16%">
-        <li><a href="/deconnexion" style="color:#FFFFFF"><span class="glyphicon glyphicon-log-out"></span> Deconnexion </a></li>
-    </ul>
+	{% if request.user.is_authenticated %}
+    	<ul class="nav navbar-nav navbar-right" style=" float:right; margin : -4% 0 0 16%">
+        	<li><a href="/deconnexion" style="color:#FFFFFF"><span class="glyphicon glyphicon-log-out"></span> Deconnexion </a></li>
+    	</ul>
+    {% endif %}
     </div><!--/.nav-collapse -->
   </div>
 </nav>
@@ -66,7 +74,9 @@
 							Description : {{annonce.annonce|truncatechars:40 }} <br/>
 							Prix : {{ annonce.prix }} € <br/>
 							lieux : {{ annonce.lieux }} <br/> 
-							<a href="{% url "lire_annonce" annonce.numero%}">Voir cette annonce</a><br/>
+							{% if request.user.is_authenticated %}
+								<a href="{% url "lire_annonce" annonce.numero%}">Voir cette annonce</a><br/>
+							{% endif %}
 						</div>
 					</div>
 			{% else %}
@@ -77,7 +87,9 @@
 						Description : {{annonce.annonce|truncatechars:40 }} <br/>
 						Prix : {{ annonce.prix }} € <br/>
 						lieux : {{ annonce.lieux }} <br/>
-						<a href="{% url "lire_annonce" annonce.numero%}">Voir cette annonce</a>
+						{% if request.user.is_authenticated %}
+							<a href="{% url "lire_annonce" annonce.numero%}">Voir cette annonce</a>
+						{% endif %}
 						<br/>
 					</div>
 				</div>
