@@ -33,7 +33,7 @@ class Profil(models.Model):
         
 
         
-class Annonce (models.Model) :
+class Annonce (models.Model):
 	""" Classe qui va gérer tout ce qui concerne les articles"""
 	titre = models.CharField(max_length=200)
 	 #boulot = models.CharField(max_length=50)
@@ -52,4 +52,36 @@ class Annonce (models.Model) :
 
 	def __str__(self) :
 		return self.titre 
+		
+
+
+class Avis(models.Model):
+    posteur = models.CharField(max_length=100)
+    receveur = models.CharField(max_length=100)
+    note = models.IntegerField()
+    commentaire = models.TextField(null=True)
+    numero = models.IntegerField()
+
+    def __str__(self) :
+        return self.numero
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
