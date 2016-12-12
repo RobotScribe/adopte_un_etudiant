@@ -21,7 +21,7 @@
 
   <body>
 
-    <div class="container-fluid">
+    <div class="container-fluid" id="container-etudiant">
 
       <div class="row">
         <div class="col-md-12">
@@ -108,11 +108,11 @@
 
           </div><!-- col12 -->
         </div><!-- row -->
-      </div><!-- container-fluid -->
 
       <!-- Carousel -->
       <div class="row" >
         <div class="col-md-12">
+
           <div id="myCarousel" class="carousel slide" data-ride="carousel" >
             <!-- Indicators -->
             <ol class="carousel-indicators">
@@ -138,7 +138,7 @@
                 <img class="second-slide" src="{% static 'img/img-en-avant-2.jpg' %}" alt="Mon image">
                   <div class="container">
                     <div class="carousel-caption">
-                      <h1> Des cours particuliers</h1>
+                      <h1>Des cours particuliers</h1>
                     </div>
                   </div>
               </div>
@@ -168,25 +168,24 @@
               <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
               <span class="sr-only">Next</span>
             </a>
-
           </div>
 
+        </div>
       </div>
 
       <div class="row">
-
-      <div class="col-md-12">
-        <footer style="background-color: #BDBDBD">&copy; Adopte un étudiant
-          <br>
-          <br>
-          <br>
-          <br>
-          <br>
-        </footer>
+        <div class="col-md-12">
+          <footer>
+            <div class="panel panel-default">
+              <div class="panel-body">
+                <strong>Écrit avec passion par PL, Quentin et Thomas</strong>
+              </div>
+              <div class="panel-footer lobster">&copy; Adopte un étudiant</div>
+            </div>
+          </footer>
+        </div>
       </div>
-      </div>
-
-    </div>
+    </div><!-- container-fluid -->
   </body>
 
 </html>

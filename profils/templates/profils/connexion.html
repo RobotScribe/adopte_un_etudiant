@@ -1,80 +1,68 @@
 <!DOCTYPE html>
 <html lang="fr">
 
-<head>
-{% load static %}
+	<head>
+	{% load static %}
 
-    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'style.css' %}" >
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+	    <link rel="stylesheet" href="{% static 'style.css' %}" >
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-	<title>Connexion</title>
-</head>
+		<title>Connexion</title>
+	</head>
 
-<body >
-	
-
-
-{% if error %}
-
-<p><strong>Utilisateur inconnu ou mauvais de mot de passe.</strong></p>
-
-{% endif %}
-
-<div class="background" style="width: screenWidth; height:screenHeight">
-<div class="container" style="margin : auto">
-<form class="form-horizontal col-lg-6 col-lg-push-3" method="post" action=".">
-<fieldset>
-{% csrf_token %}
-
-
-
-	<div class="form-group" style ="margin :20% 0% 0% 0%">
-		<div class="row">
-		<legend class="col-lg-3 col-lg-offset-5" style="text-align: center">
-			Connexion
-		</legend>
-		</div>
-
-	<div class="row">
-		<div class="form-group ">
+	<body >
 			
 
-			<label for="id_username" class="col-lg-3 col-lg-offset-3" style="text-align: center">Pseudo :</label> <input id="id_username" name="username" type="text" required /> 
-			
+
+		{% if error %}
+
+		<p><strong>Utilisateur inconnu ou mauvais de mot de passe.</strong></p>
+
+		{% endif %}
+
+		<div class="background" style="width: screenWidth; height:screenHeight">
+			<div class="container" style="margin : auto">
+				<form class="form-horizontal col-lg-6 col-lg-push-3" method="post" action=".">
+					<fieldset>
+					{% csrf_token %}
+
+						<div class="form-group" style ="margin :20% 0% 0% 0%">
+							<div class="row">
+								<legend class="col-lg-3 col-lg-offset-5" style="text-align: center">Connexion</legend>
+							</div>
+
+							<div class="row">
+								<div class="form-group ">
+									<label for="id_username" class="col-lg-3 col-lg-offset-3" style="text-align: center">Pseudo :</label>
+									<input id="id_username" name="username" type="text" required /> 
+								</div>
+							</div>	
+						</div>
+
+						<div class="row">
+				    	<div class="form-group">
+			      		<label for="id_password" class="col-lg-3 col-lg-offset-3" style="text-align: center">Mot de passe :</label>
+			      		<input id="id_password" name="password" type="password" required />
+				      </div>
+					  </div>
+					  
+
+						<div class="row-fluid">
+					    <div class="col-lg-2 col-lg-offset-5" style="text-align: center">
+					    	<input class="btn btn-primary" type="submit" style="background-color:#212121"> </input> </div>	
+					    </div>
+						</div>
+					</fieldset>
+				</form>
+				<br>
 			</div>
-		</div>	
-	</div>
-
-	<div class="row">
-    	<div class="form-group">
-    		
-      		<label for="id_password" class="col-lg-3 col-lg-offset-3" style="text-align: center">Mot de passe :</label>  <input id="id_password" name="password" type="password" required />
-      </div>
-    </div>
-  
-
- 	<div class="row-fluid">
-    <div class="col-lg-2 col-lg-offset-5" style="text-align: center">
-    <input class="btn btn-primary" type="submit" style="background-color:#212121"> </input> </div>	
-    </div>
-</div>
-
-
-</fieldset>
-</form>
-<br>
-</div>	
-
-</div>
-
-
-</div>
-</div>
-<script >
-	var screen=document.getElementById('niark');
-    var screenWidth = parseFloat(window.getComputedStyle(screen).width),
-    screenHeight = parseFloat(window.getComputedStyle(screen).height);
-</script>
-</body>
+		</div>
+		
+		<script >
+			var screen=document.getElementById('niark');
+		    var screenWidth = parseFloat(window.getComputedStyle(screen).width),
+		    screenHeight = parseFloat(window.getComputedStyle(screen).height);
+		</script>
+	</body>
 </html>

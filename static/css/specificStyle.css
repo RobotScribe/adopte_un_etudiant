@@ -1,13 +1,9 @@
-/*.navbar-brand,
-.navbar-nav li a {
-    line-height: 60px;
-    height: 60px;
-    padding-top: 0;
-}
+/*Fichier CSS spécifique du site adopte un étudiant. Ajoute quelques raffinements à Twitter Bootstrap*/
 
-.navbar-brand img {
-	height: 60px;
-}*/
+.lobster{
+	font-family: 'Lobster', Arial;
+	font-size: 30px
+}
 
 a.navbar-brand {
 	height: auto;
@@ -41,4 +37,8 @@ nav#etudiant-navbar span.glyphicon {
 
 nav#etudiant-navbar li {
 	vertical-align: middle;
+}
+
+#container-etudiant{
+	padding:0px;
 }
