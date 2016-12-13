@@ -98,6 +98,9 @@
                   <li>
                     <a href="/profil"><span class="glyphicon glyphicon-user"></span>Profil</a>
                   </li>
+                  <li>
+                  	<a href="/deconnexion"><span class="glyphicon glyphicon-log-out"></span>Deconnexion</a>
+                  </li>
                   {% endif %}
 
                 </ul>
@@ -171,6 +174,61 @@
           </div>
 
         </div>
+      </div>
+      <div class="row base-element">
+
+      	<br>
+      	<br>
+      	<br>
+      	
+      	<div class="col-md-6 center">
+      		<h1 class="title-element">Vous êtes un particulier ? </h1><br>
+      		<img src="{% static '/img/photo_particulier.svg' %}" alt="etudiant" class="img-element"/>
+      	</div>
+      	<div class="col-md-6">
+      		<div class="type-element">
+      			<div class="row">
+	      			<a href="/proposer_annonce" class="link-element">
+	      				<span class="glyphicon glyphicon-envelope"></span>
+	      			</a>
+	      		</div>
+	      		<div class="row">
+      				Inscrivez-vous et postez vos annonces ! <br>
+      				Des étudiants motivés et sérieux vous répondront ! <br>
+      				<a href="/explications_particuliers">
+      					Découvrez comment !
+      				</a>
+      			</div>
+      		</div>
+      	</div>
+      </div>
+
+      <div class="row base-element">
+      	<br>
+      	<br>
+      	
+      	<div class="col-md-6 type-element">
+      		<div class="row ">
+      			<a href="/annonces" class="link-element">
+      				<span class="glyphicon glyphicon-search"></span>
+      			</a>
+      		</div>
+      		<div class="row">
+      			Venez répondre aux annonces des particuliers ! <br>
+      			<a href="explications_etudiants">
+      			Découvrez comment !
+      			</a>
+      		</div>
+      	</div>
+      	<div class="col-md-6">
+      		<div class="row center">
+      			<h1 class="title-element">Vous êtes un étudiant ?</h1>
+      			<img src="{% static '/img/photo_etudiant.svg' %}" alt="etudiant" class="img-element"/>
+      		</div>
+      	</div>
+      	<br>
+      	<br>
+
       </div>
 
       <div class="row">
