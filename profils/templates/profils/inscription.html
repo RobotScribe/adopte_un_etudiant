@@ -110,9 +110,10 @@
 				       			<textarea class="form-control" cols="20" id="id_description" name="description" rows="1" style="resize: auto"></textarea>
 				       		</div>       	
 
-									<div class="form-group">
-					       		<label for="id_is_student" >Cochez si vous êtes étudiant :</label>
-					       		<input class="form-control" id="id_is_student" name="is_student" type="checkbox" />
+									<div class="checkbox">
+					       		<label>
+					       			<input id="id_is_student" name="is_student" type="checkbox" />Cochez si vous êtes étudiant
+					       		</label>
 					       	</div>
 
 									<div class="form-group">
@@ -122,21 +123,36 @@
 									
 					       	<br>
 					       	<div class="form-group">
-					       		<textarea id="autre" class="form-control" cols="50" id="id_description" name="autre" rows="10" style="text-align: center; background-color: #FFFFFF;resize:none; border: solid 1px black" readonly>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+					       		<textarea id="autre" class="form-control" cols="50" id="id_description" name="autre" rows="10" readonly>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 					       		</textarea>
 					       	</div>
 
-									<div class="form-group">
-		       					<label for="id_charte" >J&#39;ai pris connaisance de le charte et je l&#39;accepte :</label>
-		       					<input class="form-control" checked="checked" id="id_charte" name="charte" type="checkbox" required style="align-content:left" />
-		       					</div>
+					       	<div class="checkbox">
+					       		<label>
+					       			<input id="id_charte" name="charte" type="checkbox" /><strong>J'ai pris connaissance de la charte et je l'accepte</strong>
+					       		</label>
+					       	</div>
 
-								  <button type="submit" class="btn btn-primary">Se connecter</button>
+								  <button type="submit" class="btn btn-primary">S'inscrire</button>
 							</fieldset>
 						</form>
 					</div>
 					<div class="col-md-3"></div>
 				</div>
+
+				<div class="row">
+	        <div class="col-md-12">
+	          <footer>
+	            <div class="panel panel-default">
+	              <div class="panel-body">
+	                <strong>Écrit avec passion par PL, Quentin et Thomas</strong>
+	              </div>
+	              <div class="panel-footer lobster">&copy; Adopte un étudiant</div>
+	            </div>
+	          </footer>
+	        </div>
+      	</div>
+
     </div><!-- container fluid -->
 
 </body>
