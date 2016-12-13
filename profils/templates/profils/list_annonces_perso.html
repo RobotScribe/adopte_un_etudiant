@@ -2,15 +2,125 @@
 <html lang="fr">
 
 <head>
-{% load static %}
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% load static %}
 
-    <link rel="stylesheet" href="{% static 'style.css' %}" />
-	<title>Annonces</title>
+    <link rel="stylesheet" href="{% static 'css/specificStyle.css' %}" >
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <link rel="icon" type="image/png" href="{% static 'img/logo.png' %}" />
+    <title>{% block title %}Vos annonces{% endblock %}</title>
+    <!-- 
+    var screen=document.getElementById('niark');
+    var screenWidth = parseFloat(window.getComputedStyle(screen).width),
+    screenHeight = parseFloat(window.getComputedStyle(screen).height);
+    -->
 </head>
 
 
 <body>
-<div class="background">
+
+    <div class="container-fluid" id="container-etudiant">
+
+      <div class="row">
+        <div class="col-md-12">
+
+              <nav class="navbar navbar-default" id="etudiant-navbar">
+            <div class="container-fluid">
+              <div class="navbar-header">
+                <a class="navbar-brand" href="#">
+                  <img src="{% static 'img/logo.png' %}" alt="mon image" id="brandimage">
+                </a>
+                <a class="navbar-brand" href="/" id="etudiant-title">Adopte un étudiant</a>
+              </div>
+
+                  <!-- Collect the nav links, forms, and other content for toggling -->
+              <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav" id="nav-list">
+                  <li>
+                    <a href="/"><span class="glyphicon glyphicon-home"></span>Accueil</a>
+                  </li>
+                  <li>
+                    <a href="/annonces"><span class="glyphicon glyphicon-tags"></span>Voir les annonces</a>
+                  </li>
+                  {% if not request.user.is_authenticated %}
+                  <li>
+                    <a href="/inscription" ><span class="glyphicon glyphicon-pencil"></span>Inscription</a>
+                  </li>
+                  <li>
+                    <a href="/connexion"><span class="glyphicon glyphicon-log-out"></span>Connexion</a>
+                  </li>
+                  {% else %}
+                  <li>
+                    <a href="/proposer_annonce"><span class="glyphicon glyphicon-cloud-upload"></span>Proposer une annonce</a>
+                  </li>
+                  <li>
+                    <a href="/voir_annonces_perso/a_faire"><span class="glyphicon glyphicon-eye-open"></span>Voir vos annonces</a>
+                  </li>
+                  <li>
+                    <a href="/profil"><span class="glyphicon glyphicon-user"></span>Profil</a>
+                  </li>
+                  <li>
+                    <a href="/deconnexion"><span class="glyphicon glyphicon-log-out"></span>Deconnexion</a>
+                  </li>
+                  {% endif %}
+
+                </ul>
+              </div><!-- /.navbar-collapse -->
+
+            </div>
+          </nav>
+
+          </div><!-- col12 -->
+        </div><!-- row -->
+
+        <div class="row">
+
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                    {% if etat == "a_faire" %}
+                        <h1 class="lobster">Liste des annonces que vous avez proposées</h1>
+                        <div class="row">
+                            <div class="col-md-3"></div>
+                            <div class="col-md-6 ">
+                                <a href="/voir_annonces_perso/en_cours">Voir vos annonces à effectuer</a></br>
+                                <a href="/voir_annonces_perso/fait">Voir vos annonces faites</a>
+                            </div>
+                            <div class="col-md-3"></div>
+                        </div>
+                        
+                        
+                          
+                        </div>
+
+                    {% elif etat == "en_cours" %}
+                        <h1 class="lobster">Liste des annonces que vous devez effectuer</h1>
+                        <div class="row">
+                          <div class="col-md-3"></div>
+                          <div class="col-md-6">
+                            <a href="/voir_annonces_perso/a_faire">Voir vos annonces proposées</a></br>
+                            <a href="/voir_annonces_perso/fait">Voir vos annonces faites</a>
+                          </div>
+                          <div class="col-md-3"></div>
+                        </div>
+                    {% elif etat == "fait" %}
+                        <h1 class="lobster">Liste des annonces que vous avez effectuées</h1>
+                        <div class="row">
+                          <div class="col-md-3"></div>
+                          <div class="col-md-6">
+                            <a href="/voir_annonces_perso/a_faire">Voir vos annonces proposées</a></br>
+                            <a href="/voir_annonces_perso/en_cours">Voir vos annonces à effectuer</a>
+                          </div>
+                          <div class="col-md-3"></div>
+                        </div>
+                    {% endif %}
+            </div>
+            <div class="col-md-3"></div>
+        </div>
 
 
 {% if etat == "a_faire" %}
